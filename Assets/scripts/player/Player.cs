@@ -21,22 +21,74 @@ public class Player : MonoBehaviour {
 	// STAT DELTAS
 	// Most of the individual gameplay is here - this is where to edit numbers
 
+
+
 	// HUNGER
+	// =============
 	public float fullStomachLoss;
 
 	void FullStomachDelta () {
-		// -h/turn
+		// -h
 		FULL_STOMACH -= fullStomachLoss;
 	}
 
+
+	
 	// TIREDNESS
+	// ==============
 	public float awakeLoss;
-	public float awakeDeltaMax;
 
 	void AwakeDelta () {
-		// -t (rT) / turn
-		AWAKE -= awakeLoss * 
-	};
+		// -t(rT)
+		AWAKE -= (awakeLoss); //TODO: rT
+	}
+
+
+
+	// FITNESS
+	// ============
+	public float fitLoss;
+
+	void FitnessDelta () {
+		// -f(HT)
+		FIT -= (fitLoss); //TODO: HT
+	}
+
+
+
+	// MINDFULNESS
+	// ============
+	public float mindfulnessLoss;
+
+	void MindfulnessDelta () {
+		// -mF(HT)(F)
+		MINDFULNESS -= mindfulnessLoss; //TODO: HT, F
+	}
+
+
+
+	// CONVICTION
+	// ============
+	public float convictionLoss;
+
+	void ConvictionDelta () {
+		// +c(HT)
+		CONVICTION += convictionLoss; //TODO: HT
+	}
+
+
+
+	// DISPOSITION
+	// ============
+	public float dispositionLoss;
+
+	void DispositionDelta () {
+		// -d(HT)(M)
+		DISPOSITION -= dispositionLoss; //TODO: HT, M
+	}
+
+
+
 
 	/// <summary>
 	/// Apply appropriate changes to all stats.
@@ -44,5 +96,9 @@ public class Player : MonoBehaviour {
 	public void EndTurn () {
 		FullStomachDelta();
 		AwakeDelta();
+		FitnessDelta();
+		MindfulnessDelta();
+		ConvictionDelta();
+		DispositionDelta();
 	}
 }
