@@ -12,9 +12,14 @@ public class Player : MonoBehaviour {
 	public static float DISPOSITION { get; private set; }
 
 
+	// DEFAULT VALUES - TODO: Change according to difficulty?
 	void Start () {
 		Player.FULL_STOMACH = 50f;
-		Player.AWAKE = 35f;
+		Player.AWAKE = 50f;
+		Player.FIT = 80f;
+		Player.MINDFULNESS = 70f;
+		Player.CONVICTION = 75f;
+		Player.DISPOSITION = 70f;
 	}
 
 
