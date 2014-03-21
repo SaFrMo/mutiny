@@ -3,13 +3,15 @@ using System.Collections;
 
 public class GUI_StatsDisplay : MonoBehaviour {
 
-	GUIStyle empty = new GUIStyle();
+	public GUISkin skin;
 
 	public float spacer = 10f;
 	public float maxGraphWidth;
 
 	public Texture2D fullStomachGraph;
+	public Texture2D awakeGraph;
 	public Texture2D blackGraph;
+
 
 	void ActivateStatInfo (string whichStat) {}
 
@@ -17,7 +19,7 @@ public class GUI_StatsDisplay : MonoBehaviour {
 
 		GUILayout.BeginHorizontal();
 		// activates options relating to that stat
-		if (GUILayout.Button (name, GUILayout.MaxWidth(100f))) {
+		if (GUILayout.Button (name, GUILayout.Width(100f))) {
 			ActivateStatInfo (name);
 		}
 		// creates the appropriate box size
@@ -34,14 +36,16 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	}
 
 	void OnGUI () {
+		GUI.skin = skin;
 		maxGraphWidth = 100f;
 
 		// Right side
 
 		GUILayout.BeginArea (new Rect (Screen.width / 2, spacer, (Screen.width / 2) - spacer, Screen.height - (spacer * 2)));
-		GUILayout.Box ("Personal Statistics");
+		GUILayout.Label ("Personal Statistics");
 
 		DisplayStat ("Full Stomach", Player.FULL_STOMACH, fullStomachGraph);
+		DisplayStat ("Awake", Player.AWAKE, awakeGraph);
 
 		GUILayout.EndArea ();
 

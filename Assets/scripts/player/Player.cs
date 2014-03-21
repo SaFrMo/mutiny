@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
 	void Start () {
 		Player.FULL_STOMACH = 50f;
+		Player.AWAKE = 35f;
 	}
 
 
