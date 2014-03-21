@@ -12,7 +12,9 @@ public class Player : MonoBehaviour {
 	public static float DISPOSITION { get; private set; }
 
 
-
+	void Start () {
+		Player.FULL_STOMACH = 50f;
+	}
 
 
 
