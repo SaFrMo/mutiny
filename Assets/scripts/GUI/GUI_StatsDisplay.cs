@@ -42,12 +42,15 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	string actionsToShow = string.Empty;
 	
 	void Exercise (float timeInMinutes) {
-		// TODO: Time
-		float fractionOfAnHour = timeInMinutes / 60f;
-		// TODO: START HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		timeAllotment.Add ("Exercise", Screen.width / 
-		Player.ChangeStat("FIT", exerciseBoostPerHour * fractionOfAnHour);
-		Player.ChangeStat ("FULL_STOMACH", -exerciseHungerCostPerHour * fractionOfAnHour);
+		//float fractionOfAnHour = timeInMinutes / 60f;
+		if (!timeAllotment.ContainsKey ("Exercise")) {
+			timeAllotment.Add ("Exercise", (timeInMinutes / minutesConstant) * (Screen.width / maxTime));
+		}
+		else {
+			timeAllotment["Exercise"] = (timeInMinutes / minutesConstant) * (Screen.width / maxTime);
+		}
+		//Player.ChangeStat("FIT", exerciseBoostPerHour * fractionOfAnHour);
+		//Player.ChangeStat ("FULL_STOMACH", -exerciseHungerCostPerHour * fractionOfAnHour);
 		//Player.AWAKE -= exerciseAwakeCostPerHour * fractionOfAnHour;
 	}
 	
@@ -76,6 +79,9 @@ public class GUI_StatsDisplay : MonoBehaviour {
 			if (GUILayout.Button ("15 minutes")) {
 				Exercise (15f);
 			}
+			else if (GUILayout.Button ("30 minutes")) {
+				Exercise (30f);
+			}
 			break;
 			
 		case "Mindful":
@@ -95,12 +101,16 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	
 	public float spacer = 10f;
 	public float maxGraphWidth;
-	public float timeAllotted = 0;
+	//public float timeAllotted = 0;
 	private float taskTime = 50f;
+	private float timePassed;
 
 	// number of seconds to allow per turn - v. important
 	// IDEA: 144 seconds in a day (1 second realtime = 10 minutes game time)
 	public float maxTime = 144f;
+	// how many minutes per maxTime unit
+	private float minutesConstant;
+	private float pixelsPerSecond;
 	
 	public Texture2D fullStomachGraph;
 	public Texture2D awakeGraph;
@@ -140,6 +150,9 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	}
 	
 	void OnGUI () {
+		// minutesConstant = game-time minutes per real-time second
+		// 1440 = 24 hours * 60 minutes
+		minutesConstant = 1440f / maxTime;
 		GUI.skin = skin;
 		maxGraphWidth = 100f;
 		
@@ -167,14 +180,20 @@ public class GUI_StatsDisplay : MonoBehaviour {
 		// Time
 		float timeHeight = 80f;
 
+		// 1 second realtime = x pixels = x minutes game time
+		pixelsPerSecond = Screen.width / maxTime;
 		// this is the black background for the time graph
 		GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, Screen.width, timeHeight), blackGraph);
 		// this is time that has already passed
-		float timePassed = Screen.width * (Time.time / maxTime); 
+		timePassed = Screen.width * (Time.time / maxTime); 
 		GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, timePassed, timeHeight), timeSpent);
 		// this is time that is allotted
-		GUI.BeginGroup (new Rect(timePassed, Screen.height - timeHeight, taskTime, timeHeight));
-		GUI.DrawTexture (new Rect(0, 0, taskTime, timeHeight), timeAllottedGraph);
+		GUI.BeginGroup (new Rect(timePassed, Screen.height - timeHeight, Screen.width, timeHeight));
+		float currentActivityX = timePassed;
+		foreach (KeyValuePair<string, float> kv in timeAllotment) {
+			GUI.DrawTexture (new Rect(0, 0, kv.Value, timeHeight), timeAllottedGraph);
+			currentActivityX += kv.Value;
+		}
 		GUI.EndGroup();
 		
 		
