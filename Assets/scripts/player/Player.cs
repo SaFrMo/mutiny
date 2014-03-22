@@ -11,6 +11,36 @@ public class Player : MonoBehaviour {
 	public static float CONVICTION { get; private set; }
 	public static float DISPOSITION { get; private set; }
 
+	// this is a separate function in case animations, etc. are needed
+	public static void ChangeStat (string whichStat, float howMuch) {
+		switch (whichStat) {
+
+		case "FULL_STOMACH":
+			Player.FULL_STOMACH += howMuch;
+			break;
+
+		case "AWAKE":
+			Player.AWAKE += howMuch;
+			break;
+
+		case "FIT":
+			Player.FIT += howMuch;
+			break;
+
+		case "MINDFULNESS":
+			Player.MINDFULNESS += howMuch;
+			break;
+
+		case "CONVICTION":
+			Player.CONVICTION += howMuch;
+			break;
+
+		case "DISPOSITION":
+			Player.DISPOSITION += howMuch;
+			break;
+		};
+	}
+
 
 	// DEFAULT VALUES - TODO: Change according to difficulty?
 	void Start () {
