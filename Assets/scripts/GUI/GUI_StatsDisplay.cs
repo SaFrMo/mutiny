@@ -151,7 +151,13 @@ public class GUI_StatsDisplay : MonoBehaviour {
 		}
 	}
 
+	// Color.grey is just a placeholder
+	Color originalGUIColor = Color.grey;
+
 	void OnGUI () {
+		if (originalGUIColor == Color.grey) {
+			originalGUIColor = GUI.color;
+		}
 		// minutesConstant = game-time minutes per real-time second
 		// 1440 = 24 hours * 60 minutes
 		minutesConstant = 1440f / maxTime;
@@ -194,7 +200,9 @@ public class GUI_StatsDisplay : MonoBehaviour {
 		GUI.BeginGroup (new Rect(timePassed, Screen.height - timeHeight, Screen.width, timeHeight));
 		float currentActivityX = timePassed;
 		foreach (KeyValuePair<string, float> kv in timeAllotment) {
+			GUI.color = ((int)Time.time % 2 == 0 ? new Color (GUI.color.r, GUI.color.g, GUI.color.b, 0.5f) : originalGUIColor);
 			GUI.DrawTexture (new Rect(0, 0, kv.Value, timeHeight), timeAllottedGraph);
+			GUI.color = originalGUIColor;
 			currentActivityX += kv.Value;
 		}
 		GUI.EndGroup();
