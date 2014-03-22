@@ -1,0 +1,19 @@
+PERSON
+Captain Hargrave
+Hargrave hired me and seven others for the trip through the Ambrosia asteroid field, a necessary but dangerous pass. He has a good record for on-time payments and rate of survival (ROS) for those he hires; he's considered a relatively safe bet. The execution of the crew hand is troubling.
+/PERSON
+
+PERSON
+Annie Walker
+Extremely professional. Very mindful of personal credibility.
+/PERSON
+
+PERSON
+Bozha Robinson
+Usually quiet, mumbles when speaking. Brawny and tough.
+/PERSON
+
+PERSON
+Chris "None Better" Gill
+Marine-turned-television-personality. None Better is filming pieces of an episode of "The Diamond Mines," a popular interspatial video series. Supposed to show strong emotions toward other personalities to garner ratings.
+/PERSON
