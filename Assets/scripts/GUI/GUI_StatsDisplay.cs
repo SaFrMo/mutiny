@@ -150,7 +150,7 @@ public class GUI_StatsDisplay : MonoBehaviour {
 			GUILayout.Label (string.Empty);
 		}
 	}
-	
+
 	void OnGUI () {
 		// minutesConstant = game-time minutes per real-time second
 		// 1440 = 24 hours * 60 minutes
