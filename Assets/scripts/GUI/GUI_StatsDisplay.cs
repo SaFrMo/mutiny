@@ -111,6 +111,8 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	// how many minutes per maxTime unit
 	private float minutesConstant;
 	private float pixelsPerSecond;
+
+
 	
 	public Texture2D fullStomachGraph;
 	public Texture2D awakeGraph;
@@ -121,6 +123,7 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	public Texture2D blackGraph;
 	public Texture2D timeSpent;
 	public Texture2D timeAllottedGraph;
+
 
 	// Time allotment
 	Dictionary<string, float> timeAllotment = new Dictionary<string, float>();
@@ -146,7 +149,6 @@ public class GUI_StatsDisplay : MonoBehaviour {
 		if (includeSpace) {
 			GUILayout.Label (string.Empty);
 		}
-		
 	}
 	
 	void OnGUI () {
@@ -179,6 +181,7 @@ public class GUI_StatsDisplay : MonoBehaviour {
 		
 		// Time
 		float timeHeight = 80f;
+		timeAllottedGraph.wrapMode = TextureWrapMode.Repeat;
 
 		// 1 second realtime = x pixels = x minutes game time
 		pixelsPerSecond = Screen.width / maxTime;
