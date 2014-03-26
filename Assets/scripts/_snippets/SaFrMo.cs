@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class SaFrMo {
 
@@ -46,5 +47,23 @@ public static class SaFrMo {
 		newTexture.SetPixel (0, 0, color);
 		newTexture.Apply();
 		return newTexture;
+	}
+
+	/// <summary>
+	/// Returns circle points. Think InfoAddict in Civ V.
+	/// </summary>
+	/// <param name="points">Points.</param>
+	/// <param name="radius">Radius.</param>
+	/// <param name="center">Center.</param>
+	public static List<float> DrawCirclePoints(int points, float radius, float centerX, float centerY)
+	{
+		float slice = 2 * Mathf.PI / points;
+		for (int i = 0; i < points; i++)
+		{
+			float angle = slice * i;
+			float newX = (float)(centerX + radius * Mathf.Cos(angle));
+			float newY = (float)(centerY + radius * Mathf.Sin(angle));
+			return new List<float>() { newX, newY };
+		}
 	}
 }
