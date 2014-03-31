@@ -55,15 +55,17 @@ public static class SaFrMo {
 	/// <param name="points">Points.</param>
 	/// <param name="radius">Radius.</param>
 	/// <param name="center">Center.</param>
-	public static List<float> DrawCirclePoints(int points, float radius, float centerX, float centerY)
+	public static List<Vector3> DrawCirclePoints(int points, float radius, float centerX, float centerY)
 	{
+		List<Vector3> toReturn = new List<Vector3>();
 		float slice = 2 * Mathf.PI / points;
 		for (int i = 0; i < points; i++)
 		{
 			float angle = slice * i;
 			float newX = (float)(centerX + radius * Mathf.Cos(angle));
 			float newY = (float)(centerY + radius * Mathf.Sin(angle));
-			return new List<float>() { newX, newY };
+			toReturn.Add (new Vector3(newX, newY));
 		}
+		return toReturn;
 	}
 }
