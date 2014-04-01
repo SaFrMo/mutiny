@@ -34,9 +34,8 @@ public class GameInitiation : MonoBehaviour {
 
 		// write names for testing purposes
 		foreach (GameObject go in GAME_MANAGER.Roster) {
-			Debug.Log (go.name);
 
-			// record if there are any people the character specifically likes or dislikes
+			// initialize relationships with other NPCs, taking into account inherent personality conflicts
 			RelationshipInitiation.INITIALIZE_MY_RELATIONSHIPS (go);
 
 

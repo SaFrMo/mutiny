@@ -8,6 +8,10 @@ public static class RelationshipInitiation {
 	private static float likeConstant = 1.15f;
 	private static float dislikeConstant = .85f;
 
+	// TODO: Starting lowbounds and highbounds
+	private static int LOW_BOUND = 40;
+	private static int HIGH_BOUND = 70;
+
 	private static List<int> GetLikes (int iAmA) {
 		switch (iAmA) {
 
@@ -23,7 +27,7 @@ public static class RelationshipInitiation {
 			break;
 
 		default:
-			return null;
+			return new List<int>();
 			break;
 		};
 	}
@@ -43,7 +47,7 @@ public static class RelationshipInitiation {
 			break;
 
 		default:
-			return null;
+			return new List<int>();
 			break;
 		};
 	}
@@ -64,11 +68,13 @@ public static class RelationshipInitiation {
 		int newValue;
 
 		foreach (GameObject otherCharacter in GAME_MANAGER.Roster) {
+
 			// don't apply likes/dislikes toward yourself
 			if (otherCharacter != thisCharacter) {
 
 				int otherCharacterPersonalityType = otherCharacter.GetComponent<CharacterCard>().personalityType;
-				int startingValue = thisCharacter.GetComponent<CharacterCard>().relationships[otherCharacter];
+				// TODO: Update this starting value so that it reflects mutual relationships - too random right now
+				int startingValue = UnityEngine.Random.Range (LOW_BOUND, HIGH_BOUND);
 
 				// does this character inherently like or dislike the other character?
 				if (likes.Contains (otherCharacterPersonalityType)) {
@@ -85,7 +91,11 @@ public static class RelationshipInitiation {
 					newValue = startingValue;
 				}
 
+				// apply the change
 				thisCharacter.GetComponent<CharacterCard>().relationships[otherCharacter] = newValue;
+
+				// testing purposes
+				MonoBehaviour.print (string.Format("{0} to {1}: {2}", thisCharacter.name, otherCharacter.name, thisCharacter.GetComponent<CharacterCard>().relationships[otherCharacter]));
 			}
 		}
 	}
