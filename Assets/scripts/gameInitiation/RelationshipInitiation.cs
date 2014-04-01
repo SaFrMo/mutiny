@@ -67,6 +67,9 @@ public static class RelationshipInitiation {
 		List<int> dislikes = RelationshipInitiation.GetDislikes (iAmA);
 		int newValue;
 
+		// how much does this character like the player?
+		thisCharacter.GetComponent<CharacterCard>().yourRelationship = UnityEngine.Random.Range (LOW_BOUND, HIGH_BOUND);
+
 		foreach (GameObject otherCharacter in GAME_MANAGER.Roster) {
 
 			// don't apply likes/dislikes toward yourself
