@@ -24,6 +24,16 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 	Dictionary<GameObject, Vector2[]> crewmemberLinesReference = new Dictionary<GameObject, Vector2[]>();
 	Dictionary<GameObject, VectorLine> crewmemberVectorLineReference = new Dictionary<GameObject, VectorLine>();
 
+	void DestroyAndClearVectorLineReference (GameObject exceptThisOne = null) {
+		foreach (KeyValuePair<GameObject, VectorLine> kv in crewmemberVectorLineReference) {
+			if (kv.Key != exceptThisOne) {
+				VectorLine toDestroy = kv.Value;
+				VectorLine.Destroy (ref toDestroy);
+			}
+		}
+		crewmemberVectorLineReference.Clear ();
+	}
+	
 	// A character cell will display their name and your relationship with them.
 	void CharacterCell (Rect groupPosition, GameObject character) {
 		GUI.BeginGroup (groupPosition);
@@ -31,19 +41,21 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 
 			// "Control" key to manipulate single item in list of selected GOs
 			if (crewmemberVectorLineReference.ContainsKey (character)) {
-				VectorLine toDestroy = crewmemberVectorLineReference[character];
-				VectorLine.Destroy (ref toDestroy);
-				crewmemberVectorLineReference.Remove (character);
+				if (!ctrlIsDown && crewmemberVectorLineReference.Count > 1) {
+					DestroyAndClearVectorLineReference();
+					VectorLine line = new VectorLine (character.name, crewmemberLinesReference[character], null, 1f);
+					crewmemberVectorLineReference.Add (character, line);
+					line.Draw();
+				}
+				else {
+					VectorLine toDestroy = crewmemberVectorLineReference[character];
+					VectorLine.Destroy (ref toDestroy);
+					crewmemberVectorLineReference.Remove (character);
+				}
 			}
 			else {
 				if (!ctrlIsDown) {
-					foreach (KeyValuePair<GameObject, VectorLine> kv in crewmemberVectorLineReference) {
-						if (kv.Key != character) {
-							VectorLine toDestroy = kv.Value;
-							VectorLine.Destroy (ref toDestroy);
-						}
-					}
-					crewmemberVectorLineReference.Clear ();
+					DestroyAndClearVectorLineReference(character);
 				}
 				VectorLine line = new VectorLine (character.name, crewmemberLinesReference[character], null, 1f);
 				crewmemberVectorLineReference.Add (character, line);
