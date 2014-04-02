@@ -9,4 +9,5 @@ public class CharacterCard : MonoBehaviour {
 	public Dictionary<GameObject, int> relationships = new Dictionary<GameObject, int>();
 	public int yourRelationship;
 	public Texture2D portrait;
+	public bool drawRelationshipLines = false;
 }
