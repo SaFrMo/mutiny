@@ -10,6 +10,8 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 	public float cellHeight = 100f;
 	public float spacer = 5f;
 
+	private bool ctrlIsDown;
+
 	// array of points to connect cells and show relationships; 500 is an arbitrary Big Number
 	Vector2[] points = new Vector2[500];
 	//VectorLine line; //= new VectorLine ("Relationships", points, null, 1f);
@@ -28,39 +30,25 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 		if (GUI.Button (new Rect (0, 0, cellWidth, cellHeight), string.Format ("{0}\n{1}", character.name, character.GetComponent<CharacterCard>().yourRelationship))) {
 
 			// "Control" key to manipulate single item in list of selected GOs
-			//if (Event.current.keyCode == KeyCode.LeftControl) {
-				/*
-				if (selectedCharacters.Contains (character)) {
-					selectedCharacters.Remove (character);
-				}
-				else {
-					selectedCharacters.Add (character);
-				}
-				*/
-				//character.GetComponent<CharacterCard>().drawRelationshipLines = !character.GetComponent<CharacterCard>().drawRelationshipLines;
 			if (crewmemberVectorLineReference.ContainsKey (character)) {
 				VectorLine toDestroy = crewmemberVectorLineReference[character];
 				VectorLine.Destroy (ref toDestroy);
 				crewmemberVectorLineReference.Remove (character);
 			}
 			else {
+				if (!ctrlIsDown) {
+					foreach (KeyValuePair<GameObject, VectorLine> kv in crewmemberVectorLineReference) {
+						if (kv.Key != character) {
+							VectorLine toDestroy = kv.Value;
+							VectorLine.Destroy (ref toDestroy);
+						}
+					}
+					crewmemberVectorLineReference.Clear ();
+				}
 				VectorLine line = new VectorLine (character.name, crewmemberLinesReference[character], null, 1f);
 				crewmemberVectorLineReference.Add (character, line);
 				line.Draw();
 			}
-			//}
-
-			// manipulate display of a single character at a time
-			/*
-			else {
-				if (selectedCharacters.Contains (character)) {
-					selectedCharacters.Remove (character);
-				}
-				else {
-					selectedCharacters.Add (character);
-				}
-			}
-			*/
 		}
 		GUI.EndGroup();
 	}
@@ -73,25 +61,6 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 			CharacterCell (new Rect (cellLocation.x - cellWidth / 2, cellLocation.y - cellHeight / 2, cellWidth, cellHeight), GAME_MANAGER.Roster[i]);
 		}
 	}
-
-	/*
-	void DrawRelationshipLines (GameObject source) {
-		foreach (KeyValuePair<GameObject, int> kv in source.GetComponent<CharacterCard>().relationships) {
-			GameObject go = kv.Key;
-			if (go != source) {
-
-			}
-		}
-		//VectorLine line = new VectorLine (source.name, pointsList.ToArray(), null, 1f);
-		if (selectedCharacters.Contains (source)) {
-
-		}
-		else {
-			//VectorLine.Destroy (ref line);
-		}
-
-	}
-*/
 
 	void Start () {
 		// first, grab the list of point Vector3s for the circle
@@ -120,8 +89,11 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 				}
 			}
 			crewmemberLinesReference.Add (source, pointsList.ToArray());
-			//VectorLine line = new VectorLine (source.name, pointsList.ToArray(), null, 1f);
 		}
+	}
+
+	void Update () {
+		ctrlIsDown = Input.GetKey (KeyCode.LeftControl);
 	}
 
 
