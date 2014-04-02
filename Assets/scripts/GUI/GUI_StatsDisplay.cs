@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GUI_StatsDisplay : MonoBehaviour {
+
+	public bool DISPLAYED = false;
 	
 	// PLACEHOLDERS FOR IN-GAME ITEMS
 	string meager = "Meager Meal";
@@ -155,58 +157,58 @@ public class GUI_StatsDisplay : MonoBehaviour {
 	Color originalGUIColor = Color.grey;
 
 	void OnGUI () {
-		if (originalGUIColor == Color.grey) {
-			originalGUIColor = GUI.color;
-		}
-		// minutesConstant = game-time minutes per real-time second
-		// 1440 = 24 hours * 60 minutes
-		minutesConstant = 1440f / maxTime;
-		GUI.skin = skin;
-		maxGraphWidth = 100f;
-		
-		// Right side
-		
-		GUILayout.BeginArea (new Rect (Screen.width / 2 - spacer, spacer, (Screen.width / 2) - spacer, Screen.height - (spacer * 2)));
-		GUILayout.Label ("Personal Statistics");
-		GUILayout.Label (string.Empty);
-		
-		DisplayStat ("Full Stomach", Player.FULL_STOMACH, fullStomachGraph);
-		DisplayStat ("Awake", Player.AWAKE, awakeGraph);
-		DisplayStat ("Fit", Player.FIT, fitGraph);
-		// display inventory
-		DisplayStat ("Mindful", Player.MINDFULNESS, mindfulnessGraph);
-		DisplayStat ("Convicted", Player.CONVICTION, convictionGraph);
-		DisplayStat ("Well-Disposed", Player.DISPOSITION, dispositionGraph);
-		
-		GUILayout.EndArea ();
-		
-		// Left side
-		GUILayout.BeginArea (new Rect (spacer, spacer, Screen.width / 2 - spacer * 3, Screen.height - spacer * 2));
-		ActionsMenu ();
-		GUILayout.EndArea();
-		
-		// Time
-		float timeHeight = 80f;
-		timeAllottedGraph.wrapMode = TextureWrapMode.Repeat;
+		if (DISPLAYED) {
+			if (originalGUIColor == Color.grey) {
+				originalGUIColor = GUI.color;
+			}
+			// minutesConstant = game-time minutes per real-time second
+			// 1440 = 24 hours * 60 minutes
+			minutesConstant = 1440f / maxTime;
+			GUI.skin = skin;
+			maxGraphWidth = 100f;
+			
+			// Right side
+			
+			GUILayout.BeginArea (new Rect (Screen.width / 2 - spacer, spacer, (Screen.width / 2) - spacer, Screen.height - (spacer * 2)));
+			GUILayout.Label ("Personal Statistics");
+			GUILayout.Label (string.Empty);
+			
+			DisplayStat ("Full Stomach", Player.FULL_STOMACH, fullStomachGraph);
+			DisplayStat ("Awake", Player.AWAKE, awakeGraph);
+			DisplayStat ("Fit", Player.FIT, fitGraph);
+			// display inventory
+			DisplayStat ("Mindful", Player.MINDFULNESS, mindfulnessGraph);
+			DisplayStat ("Convicted", Player.CONVICTION, convictionGraph);
+			DisplayStat ("Well-Disposed", Player.DISPOSITION, dispositionGraph);
+			
+			GUILayout.EndArea ();
+			
+			// Left side
+			GUILayout.BeginArea (new Rect (spacer, spacer, Screen.width / 2 - spacer * 3, Screen.height - spacer * 2));
+			ActionsMenu ();
+			GUILayout.EndArea();
+			
+			// Time
+			float timeHeight = 80f;
+			timeAllottedGraph.wrapMode = TextureWrapMode.Repeat;
 
-		// 1 second realtime = x pixels = x minutes game time
-		pixelsPerSecond = Screen.width / maxTime;
-		// this is the black background for the time graph
-		GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, Screen.width, timeHeight), blackGraph);
-		// this is time that has already passed
-		timePassed = Screen.width * (Time.time / maxTime); 
-		GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, timePassed, timeHeight), timeSpent);
-		// this is time that is allotted
-		GUI.BeginGroup (new Rect(timePassed, Screen.height - timeHeight, Screen.width, timeHeight));
-		float currentActivityX = timePassed;
-		foreach (KeyValuePair<string, float> kv in timeAllotment) {
-			GUI.color = ((int)Time.time % 2 == 0 ? new Color (GUI.color.r, GUI.color.g, GUI.color.b, 0.5f) : originalGUIColor);
-			GUI.DrawTexture (new Rect(0, 0, kv.Value, timeHeight), timeAllottedGraph);
-			GUI.color = originalGUIColor;
-			currentActivityX += kv.Value;
+			// 1 second realtime = x pixels = x minutes game time
+			pixelsPerSecond = Screen.width / maxTime;
+			// this is the black background for the time graph
+			GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, Screen.width, timeHeight), blackGraph);
+			// this is time that has already passed
+			timePassed = Screen.width * (Time.time / maxTime); 
+			GUI.DrawTexture (new Rect(0, Screen.height - timeHeight, timePassed, timeHeight), timeSpent);
+			// this is time that is allotted
+			GUI.BeginGroup (new Rect(timePassed, Screen.height - timeHeight, Screen.width, timeHeight));
+			float currentActivityX = timePassed;
+			foreach (KeyValuePair<string, float> kv in timeAllotment) {
+				GUI.color = ((int)Time.time % 2 == 0 ? new Color (GUI.color.r, GUI.color.g, GUI.color.b, 0.5f) : originalGUIColor);
+				GUI.DrawTexture (new Rect(0, 0, kv.Value, timeHeight), timeAllottedGraph);
+				GUI.color = originalGUIColor;
+				currentActivityX += kv.Value;
+			}
+			GUI.EndGroup();
 		}
-		GUI.EndGroup();
-		
-		
 	}
 }

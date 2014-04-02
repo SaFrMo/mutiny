@@ -5,19 +5,14 @@ using Vectrosity;
 
 public class GUI_RelationshipsDisplay : MonoBehaviour {
 
+	public bool DISPLAYED = false;
+
 	public GUISkin skin;
 	public float cellWidth = 100f;
 	public float cellHeight = 100f;
 	public float spacer = 5f;
 
 	private bool ctrlIsDown;
-
-	// array of points to connect cells and show relationships; 500 is an arbitrary Big Number
-	Vector2[] points = new Vector2[500];
-	//VectorLine line; //= new VectorLine ("Relationships", points, null, 1f);
-
-	// These GameObjects will be the "selected" ones - only their information will show
-	//List<GameObject> selectedCharacters = new List<GameObject>();
 
 	// Contains a reference to each crewmember and their cell location
 	Dictionary<GameObject, Vector3> crewmemberCellLocation = new Dictionary<GameObject, Vector3>();
@@ -110,7 +105,9 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 
 
 	void OnGUI () {
-		GUI.skin = skin;
-		DrawRelationshipCircle();
+		if (DISPLAYED) {
+			GUI.skin = skin;
+			DrawRelationshipCircle();
+		}
 	}
 }
