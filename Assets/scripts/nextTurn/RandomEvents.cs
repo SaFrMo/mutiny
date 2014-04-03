@@ -44,4 +44,8 @@ public class RandomEvents : MonoBehaviour {
 			b.GetComponent<CharacterCard>().history.Add (randomEvent[i], a);
 		}
 	}
+
+	public void NextTurn () {
+		RandomEventApply();
+	}
 }
