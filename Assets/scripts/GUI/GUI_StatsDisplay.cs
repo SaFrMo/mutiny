@@ -2,8 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GUI_StatsDisplay : MonoBehaviour {
+public class GUI_StatsDisplay : MonoBehaviour, IGUIMenu {
 
+	// interface members
+	public string ButtonName() {
+		return "Personal View";
+	}
+
+	public void Display () {
+		DISPLAYED = true;
+	}
+	
+	public void Hide() {
+		DISPLAYED = false;
+	}
+
+	// class
 	public bool DISPLAYED = false;
 	
 	// PLACEHOLDERS FOR IN-GAME ITEMS

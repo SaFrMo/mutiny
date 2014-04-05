@@ -3,8 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Vectrosity;
 
-public class GUI_RelationshipsDisplay : MonoBehaviour {
+public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
 
+	// interface members
+	public string ButtonName() {
+		return "Social View";
+	}
+
+	public void Display () {
+		DISPLAYED = true;
+	}
+	
+	public void Hide() {
+		// TODO: Add saving functionality
+		DISPLAYED = false;
+		DestroyAndClearVectorLineReference();
+	}
+
+	// class
 	public bool DISPLAYED = false;
 
 	public GUISkin skin;
@@ -13,6 +29,7 @@ public class GUI_RelationshipsDisplay : MonoBehaviour {
 	public float spacer = 5f;
 
 	private bool ctrlIsDown;
+	private GameObject[] toShowOnActivation;
 
 	// Contains a reference to each crewmember and their cell location
 	Dictionary<GameObject, Vector3> crewmemberCellLocation = new Dictionary<GameObject, Vector3>();

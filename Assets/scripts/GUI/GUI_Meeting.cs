@@ -1,42 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class GUI_Meeting : MonoBehaviour {
+public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 
-	public GUISkin skin;
-
-	// TODO: Clean up rects in this code
-
-	public bool DISPLAYED = false;
-
-	private float liaisonSpeechWidth;
-	private float liaisonSpeechHeight;
-
-	Rect liaisonSpeechLocation;
-	Rect itemMenuLocation;
-	Rect infoMenuLocation;
-
-	void Start () {
-		liaisonSpeechWidth = Screen.width * .5f;
-		liaisonSpeechHeight = Screen.height * .25f;
-
-		liaisonSpeechLocation = new Rect (0, Screen.height - liaisonSpeechHeight, liaisonSpeechWidth, liaisonSpeechHeight);
-		itemMenuLocation = new Rect (Screen.width * .5f, Screen.height * .25f, Screen.width * .25f, Screen.height * .75f);
-		infoMenuLocation = new Rect (Screen.width * .75f, Screen.height * .25f, Screen.width * .25f, Screen.height * .75f);
+	// interface members
+	public string ButtonName() {
+		return "Meeting with Liaison";
 	}
 
+	public void Display () {
+		DISPLAYED = true;
+	}
+
+	public void Hide() {
+		DISPLAYED = false;
+	}
+
+	// class members	
+	public GUISkin skin;
+	
+	public bool DISPLAYED = false;
+	
+	private float liaisonSpeechWidth;
+	private float liaisonSpeechHeight;
+	
+	private float quarterScreenWidth;
+	private float quarterScreenHeight;
+	
+	private float spacer = 0;
+
+	private string liaisonSpeech;
+	
+	void Start () {
+		quarterScreenWidth = Screen.width * .25f;
+		quarterScreenHeight = Screen.height * .25f;
+	}
+	
 	void DrawLiaisonSpeech () {
-		string liaisonSpeech = string.Empty;
+		liaisonSpeech = string.Empty;
 		foreach (string s in Report.REPORT_TEXT) {
 			liaisonSpeech += s;
 		}
-		GUI.BeginGroup (liaisonSpeechLocation);
-		GUI.Box (new Rect (0, 0, liaisonSpeechWidth, liaisonSpeechHeight), liaisonSpeech);
+		GUI.BeginGroup (new Rect (0, quarterScreenHeight * 3, quarterScreenWidth * 2, quarterScreenHeight));
+		GUI.Box (new Rect (0, 0, quarterScreenWidth * 2, quarterScreenHeight), liaisonSpeech);
 		GUI.EndGroup();
 	}
-
-
-
+	
+	
+	
 	// MEETING STEP 2. ORDERS
 	// =========================
 	// Give Liaison his/her instructions. Bring X thing, smuggle Y thing in, talk to X person.
@@ -44,32 +56,31 @@ public class GUI_Meeting : MonoBehaviour {
 	int numberOfTasks = 0;
 	int maxTasks = 3;
 	string errorMessage = string.Empty;
-
+	
 	enum Reports {
-
+		
 	};
-
+	
 	enum Orders {
 		MainMenu = 0,
 		TalkTo = 1,
 		ErrorMessage = 2,
 		ReportOn = 3,
-		BringMe = 4
+		BringMe = 4,
 	};
-
+	
 	void MainMenuButton () {
 		if (GUILayout.Button ("[Go back]")) {
 			ordersLocation = 0;
 		}
 	}
-
+	
 	void DrawDialogue () {
-		//GUI.BeginGroup (new Rect (liaisonSpeechWidth, Screen.height * .5f, liaisonSpeechWidth * .5f, liaisonSpeechHeight * 2f));
-		GUILayout.BeginArea (new Rect (liaisonSpeechWidth, Screen.height * .5f, liaisonSpeechWidth * .5f, liaisonSpeechHeight * 2f));
-
-
+		GUILayout.BeginArea (new Rect (quarterScreenWidth * 2, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight));
+		
+		
 		switch (ordersLocation) {
-
+			
 			// main concourse of orders
 		case Orders.MainMenu:
 			// reports subheading
@@ -77,7 +88,7 @@ public class GUI_Meeting : MonoBehaviour {
 			if (GUILayout.Button ("Report on...")) {
 				ordersLocation = Orders.ReportOn;
 			}
-			//orders subheading
+			// orders subheading
 			GUILayout.Box ("Orders");
 			if (GUILayout.Button ("Talk to...")) {
 				ordersLocation = Orders.TalkTo;
@@ -87,6 +98,7 @@ public class GUI_Meeting : MonoBehaviour {
 			}
 			break;
 
+			
 		case Orders.TalkTo:
 			foreach (GameObject go in GAME_MANAGER.Roster) {
 				if (GUILayout.Button (go.name + ".")) {
@@ -108,15 +120,16 @@ public class GUI_Meeting : MonoBehaviour {
 			}
 			MainMenuButton();
 			break;
-
+			
 		case Orders.ReportOn:
 			MainMenuButton();
 			break;
-
+			
 		case Orders.BringMe:
 			MainMenuButton();
 			break;
 
+			
 		case Orders.ErrorMessage:
 			GUILayout.Box (errorMessage);
 			if (GUILayout.Button ("[Back to roster]")) {
@@ -125,17 +138,18 @@ public class GUI_Meeting : MonoBehaviour {
 			MainMenuButton();
 			break;
 		};
-
-
-
-
+		
+		
+		
+		
 		GUILayout.EndArea();
 	}
-
+	
 	void DrawLiaisonToDoList () {
-		GUILayout.BeginArea (new Rect (liaisonSpeechWidth * 1.5f, Screen.height * .5f, liaisonSpeechWidth * .5f, liaisonSpeechHeight * 2f));
+		GUILayout.BeginArea (new Rect (quarterScreenWidth * 3, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight * 2));
 		GUILayout.Box ("LIAISON'S TO-DO LIST.");
 		string[] tasks = ToDoList.TODO_LIST.ToArray();
+		// TODO: Add tooltip
 		foreach (string s in tasks) {
 			if (GUILayout.Button (s)) {
 				ToDoList.TODO_LIST.Remove (s);
@@ -144,15 +158,15 @@ public class GUI_Meeting : MonoBehaviour {
 		}
 		GUILayout.EndArea();
 	}
-
-
-
+	
+	
+	
 	void OnGUI () {
 		GUI.skin = skin;
-		//if (DISPLAYED) {
+		if (DISPLAYED) {
 			DrawLiaisonSpeech();
 			DrawDialogue();
 			DrawLiaisonToDoList();
-		//}
+		}
 	}
 }
