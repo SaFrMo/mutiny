@@ -45,12 +45,25 @@ public class GUI_Meeting : MonoBehaviour {
 	int maxTasks = 3;
 	string errorMessage = string.Empty;
 
+	enum Reports {
+
+	};
+
 	enum Orders {
 		MainMenu = 0,
 		TalkTo = 1,
-		ErrorMessage = 2
+		ErrorMessage = 2,
+		ReportOn = 3,
+		BringMe = 4
 	};
-	void DrawLiaisonOrders () {
+
+	void MainMenuButton () {
+		if (GUILayout.Button ("[Go back]")) {
+			ordersLocation = 0;
+		}
+	}
+
+	void DrawDialogue () {
 		//GUI.BeginGroup (new Rect (liaisonSpeechWidth, Screen.height * .5f, liaisonSpeechWidth * .5f, liaisonSpeechHeight * 2f));
 		GUILayout.BeginArea (new Rect (liaisonSpeechWidth, Screen.height * .5f, liaisonSpeechWidth * .5f, liaisonSpeechHeight * 2f));
 
@@ -59,8 +72,18 @@ public class GUI_Meeting : MonoBehaviour {
 
 			// main concourse of orders
 		case Orders.MainMenu:
+			// reports subheading
+			GUILayout.Box ("Reports");
+			if (GUILayout.Button ("Report on...")) {
+				ordersLocation = Orders.ReportOn;
+			}
+			//orders subheading
+			GUILayout.Box ("Orders");
 			if (GUILayout.Button ("Talk to...")) {
 				ordersLocation = Orders.TalkTo;
+			}
+			if (GUILayout.Button ("Bring me...")) {
+				ordersLocation = Orders.BringMe;
 			}
 			break;
 
@@ -83,9 +106,15 @@ public class GUI_Meeting : MonoBehaviour {
 					}
 				}
 			}
-			if (GUILayout.Button ("[Go back]")) {
-				ordersLocation = 0;
-			}
+			MainMenuButton();
+			break;
+
+		case Orders.ReportOn:
+			MainMenuButton();
+			break;
+
+		case Orders.BringMe:
+			MainMenuButton();
 			break;
 
 		case Orders.ErrorMessage:
@@ -93,9 +122,7 @@ public class GUI_Meeting : MonoBehaviour {
 			if (GUILayout.Button ("[Back to roster]")) {
 				ordersLocation = Orders.TalkTo;
 			}
-			if (GUILayout.Button ("[Back to main menu]")) {
-				ordersLocation = Orders.MainMenu;
-			}
+			MainMenuButton();
 			break;
 		};
 
@@ -124,7 +151,7 @@ public class GUI_Meeting : MonoBehaviour {
 		GUI.skin = skin;
 		//if (DISPLAYED) {
 			DrawLiaisonSpeech();
-			DrawLiaisonOrders();
+			DrawDialogue();
 			DrawLiaisonToDoList();
 		//}
 	}
