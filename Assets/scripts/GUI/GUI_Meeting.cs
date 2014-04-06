@@ -20,7 +20,7 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 	// class members	
 	public GUISkin skin;
 	
-	public bool DISPLAYED = false;
+	public bool DISPLAYED = true;
 	
 	private float liaisonSpeechWidth;
 	private float liaisonSpeechHeight;

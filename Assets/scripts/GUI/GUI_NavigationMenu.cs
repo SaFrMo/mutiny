@@ -15,8 +15,8 @@ public class GUI_NavigationMenu : MonoBehaviour {
 
 	// IMPLEMENTATION: Attach to GUI GameObject
 
-	List<IGUIMenu> menus = new List<IGUIMenu>();
-	IGUIMenu[] menuArray;
+	private List<IGUIMenu> menus = new List<IGUIMenu>();
+	private IGUIMenu[] menuArray;
 
 	void Start () {
 		// TODO: There must be a more flexible way to populate this list
@@ -38,6 +38,16 @@ public class GUI_NavigationMenu : MonoBehaviour {
 		*/
 
 		menuArray = menus.ToArray();
+
+		// this will display the default screen for a new game (the Meeting screen)
+		foreach (IGUIMenu x in menus) {
+			if (x == GetComponent<GUI_Meeting>()) {
+				x.Display ();
+			}
+			else {
+				x.Hide ();
+			}
+		}
 	}
 
 	void OnGUI () {
