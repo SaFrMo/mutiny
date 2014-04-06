@@ -86,6 +86,26 @@ public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
 		}
 	}
 
+	private float relationshipNumbersSize = 50f;
+
+	void DrawRelationshipNumbers () {
+		// TODO: prevent multiple draws
+		foreach (GameObject source in crewmemberVectorLineReference.Keys) {
+			foreach (GameObject other in GAME_MANAGER.Roster) {
+				if (source != other) {
+					Vector3 sourceLocation = crewmemberCellLocation[source];
+					Vector3 otherLocation = crewmemberCellLocation[other];
+					Vector3 average = (sourceLocation + otherLocation) / 2;
+					float averageFeeling = ((source.GetComponent<CharacterCard>().relationships[other] + 
+					                        other.GetComponent<CharacterCard>().relationships[source]) / 2);
+					// TODO: custom skin
+					GUI.Box (new Rect (average.x - relationshipNumbersSize / 2, average.y - relationshipNumbersSize / 2, relationshipNumbersSize,
+					                   relationshipNumbersSize), averageFeeling.ToString ());
+				}
+			}
+		}
+	}
+
 	void Start () {
 		// first, grab the list of point Vector3s for the circle
 		List<Vector3> points = SaFrMo.DrawCirclePoints (GAME_MANAGER.Roster.Count, 200f, Screen.width / 2, Screen.height / 2);
@@ -125,6 +145,7 @@ public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
 		if (DISPLAYED) {
 			GUI.skin = skin;
 			DrawRelationshipCircle();
+			DrawRelationshipNumbers();
 		}
 	}
 }
