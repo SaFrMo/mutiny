@@ -6,6 +6,8 @@ public class Report : MonoBehaviour {
 
 	// The default value here is the first thing the liaison will say in the game.
 	public static List<string> REPORT_TEXT = new List<string>() {
-		"test"
+		"I started pulling things together for you to do the work of influencing the crew."
 	};
+
+
 }

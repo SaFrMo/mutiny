@@ -67,6 +67,7 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 		ErrorMessage = 2,
 		ReportOn = 3,
 		BringMe = 4,
+		ContextualQuestions
 	};
 	
 	void MainMenuButton () {
@@ -95,6 +96,9 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 			}
 			if (GUILayout.Button ("Bring me...")) {
 				ordersLocation = Orders.BringMe;
+			}
+			if (GUILayout.Button ("[Contextual questions...]")) {
+				ordersLocation = Orders.ContextualQuestions;
 			}
 			break;
 
@@ -126,6 +130,10 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 			break;
 			
 		case Orders.BringMe:
+			MainMenuButton();
+			break;
+
+		case Orders.ContextualQuestions:
 			MainMenuButton();
 			break;
 
