@@ -20,12 +20,22 @@ public class GUI_NavigationMenu : MonoBehaviour {
 
 	void Start () {
 		// TODO: There must be a more flexible way to populate this list
+		menus = new List<IGUIMenu>() {
+			GetComponent<GUI_StatsDisplay>(),
+			GetComponent<GUI_Meeting>(),
+			GetComponent<GUI_RelationshipsDisplay>(),
+			GetComponent<GUI_IndividualDisplay>()
+		};
+		/*
 		IGUIMenu a = GetComponent<GUI_StatsDisplay>();
 		IGUIMenu b = GetComponent<GUI_Meeting>();
 		IGUIMenu c = GetComponent<GUI_RelationshipsDisplay>();
+		IGUIMenu d = GetComponent<GUI_IndividualDisplay>();
 		menus.Add (a);
 		menus.Add (b);
 		menus.Add (c);
+		menus.Add (d);
+		*/
 
 		menuArray = menus.ToArray();
 	}

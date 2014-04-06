@@ -23,6 +23,9 @@ public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
 	// class
 	public bool DISPLAYED = false;
 
+
+
+
 	public GUISkin skin;
 	public float cellWidth = 100f;
 	public float cellHeight = 100f;
@@ -105,6 +108,7 @@ public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
 			}
 		}
 	}
+	
 
 	void Start () {
 		// first, grab the list of point Vector3s for the circle

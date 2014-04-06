@@ -7,6 +7,7 @@ public class GAME_MANAGER : MonoBehaviour {
 	public static GameObject PLAYER = null;
 	public static GameObject LIAISON = null;
 	public static List<GameObject> Roster = new List<GameObject>();
+	public static float SPACER = 50f;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,8 @@ public class GAME_MANAGER : MonoBehaviour {
 			}
 		}
 	}
+
+
 
 	// TODO: Remove. Testing purposes only.
 	void OnGUI () {
