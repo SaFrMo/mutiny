@@ -15,7 +15,6 @@ public class NEXT_TURN : MonoBehaviour {
 	}
 
 	public static void GO () {
-		Report.REPORT_TEXT.Clear();
 		g.NextTurn();
 		r.NextTurn();
 	}

@@ -21,7 +21,11 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 	public GUISkin skin;
 	
 	public bool DISPLAYED = true;
-	
+
+	public static string CONTEXTUAL_STIMULUS = "This is a test.";
+	public static Dictionary<string, int> CONTEXTUAL_PLAYER_LINES = new Dictionary<string, int>();
+	public static int CONTEXTUAL_INDEX;
+
 	private float liaisonSpeechWidth;
 	private float liaisonSpeechHeight;
 	
@@ -30,20 +34,31 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 	
 	private float spacer = 0;
 
-	private string liaisonSpeech;
+	//private string liaisonSpeechToDisplay;
+	private static List<string> liaisonSpeechList = new List<string>();
+	public static void SET_LIAISON_SPEECH (string text, bool clearList = true) {
+		if (clearList)
+			liaisonSpeechList.Clear ();
+		liaisonSpeechList.Add (text);
+	}
+	public static void SET_LIAISON_SPEECH (List<string> textList, bool clearList = true) {
+		if (clearList)
+			liaisonSpeechList.Clear();
+		liaisonSpeechList = textList;
+	}
 	
 	void Start () {
 		quarterScreenWidth = Screen.width * .25f;
 		quarterScreenHeight = Screen.height * .25f;
 	}
-	
+
 	void DrawLiaisonSpeech () {
-		liaisonSpeech = string.Empty;
-		foreach (string s in Report.REPORT_TEXT) {
-			liaisonSpeech += s;
+		string liaisonSpeechToDisplay = string.Empty;
+		foreach (string s in liaisonSpeechList) {//Report.REPORT_TEXT) {
+			liaisonSpeechToDisplay += s + "\n";
 		}
 		GUI.BeginGroup (new Rect (0, quarterScreenHeight * 3, quarterScreenWidth * 2, quarterScreenHeight));
-		GUI.Box (new Rect (0, 0, quarterScreenWidth * 2, quarterScreenHeight), liaisonSpeech);
+		GUI.Box (new Rect (0, 0, quarterScreenWidth * 2, quarterScreenHeight), liaisonSpeechToDisplay);
 		GUI.EndGroup();
 	}
 	
@@ -77,7 +92,7 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 	}
 	
 	void DrawDialogue () {
-		GUILayout.BeginArea (new Rect (quarterScreenWidth * 2, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight));
+		GUILayout.BeginArea (new Rect (quarterScreenWidth * 2, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight * 2));
 		
 		
 		switch (ordersLocation) {
@@ -118,6 +133,7 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 						}
 					}
 					else {
+						errorMessage = "I won't have time for that many errands.";
 						ordersLocation = Orders.ErrorMessage;
 					}
 				}
@@ -134,6 +150,12 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 			break;
 
 		case Orders.ContextualQuestions:
+			SET_LIAISON_SPEECH (CONTEXTUAL_STIMULUS);
+			foreach (KeyValuePair<string, int> kv in CONTEXTUAL_PLAYER_LINES) {
+				if (GUILayout.Button (kv.Key)) {
+					CONTEXTUAL_INDEX = kv.Value;
+				}
+			}
 			MainMenuButton();
 			break;
 

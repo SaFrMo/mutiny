@@ -74,7 +74,8 @@ public class GenerateOverallMood : MonoBehaviour {
 		}
 
 		// translate the random index to a string via the overallMood dictionary in this class
-		Report.REPORT_TEXT.Add (overallMood[randomIndex]);
+		//Report.REPORT_TEXT.Add (overallMood[randomIndex]);
+		GUI_Meeting.SET_LIAISON_SPEECH (overallMood[randomIndex]);
 
 		// remove the random index to prevent duplicates
 		overallMood.Remove (randomIndex);
