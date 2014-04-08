@@ -123,11 +123,22 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 				if (GUILayout.Button (go.name + ".")) {
 					if (numberOfTasks < maxTasks) {
 						if (ToDoList.TODO_LIST.Contains (string.Format ("Talk to {0}.", go.name))) {
-							errorMessage = string.Format ("I'm already going to talk to {0}.", go.name);
-							ordersLocation = Orders.ErrorMessage;
+							SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
 						}
 						else {
 							ToDoList.TODO_LIST.Add (string.Format ("Talk to {0}.", go.name));
+
+							SET_LIAISON_SPEECH (GAME_MANAGER.GET_RESPONSE (go,
+							                                             string.Format ("I don't see what good that'll do, but I'll talk to {0}.", go.name),
+							                                             string.Format ("There's not going to be much changing their mind, but alright."),
+							                                             string.Format ("Alright, I'll talk to {0}.", go.name),
+							                                             string.Format ("I think {0} is leaning toward us. That's a good idea.", go.name),
+							                                             string.Format ("I'll check in with our friend {0}.", go.name),
+							                                             string.Format ("{0} is very much on board already, but I'll stop by anyway.", go.name)));
+
+
+
+
 							ordersLocation = Orders.MainMenu;
 							numberOfTasks++;
 						}
@@ -184,6 +195,7 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 			if (GUILayout.Button (s)) {
 				ToDoList.TODO_LIST.Remove (s);
 				numberOfTasks--;
+				SET_LIAISON_SPEECH (string.Format ("Okay, I won't {0}{1}", s[0].ToString().ToLower(), s.Substring(1)));
 			}
 		}
 		GUILayout.EndArea();

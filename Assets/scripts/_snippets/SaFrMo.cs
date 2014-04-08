@@ -68,4 +68,14 @@ public static class SaFrMo {
 		}
 		return toReturn;
 	}
+
+	/// <summary>
+	/// Gets a random string from a list.
+	/// </summary>
+	/// <returns>The random string from list.</returns>
+	/// <param name="source">Source.</param>
+	public static string GetRandomStringFromList (List<string> source) {
+		string toReturn = source[UnityEngine.Random.Range (0, source.Count - 1)];
+		return toReturn;
+	}
 }
