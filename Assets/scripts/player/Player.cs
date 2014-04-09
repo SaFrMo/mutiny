@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public static Dictionary <string, int> INVENTORY = new Dictionary<string, int>() {
-		{ "3 x 5 index card", 1 }
+	public static List<string> INVENTORY = new List<string>() {
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6"
 	};
 
 	// Player stats - all accessible without GetComponent<>()

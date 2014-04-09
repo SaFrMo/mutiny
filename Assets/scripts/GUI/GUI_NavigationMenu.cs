@@ -24,7 +24,8 @@ public class GUI_NavigationMenu : MonoBehaviour {
 			GetComponent<GUI_StatsDisplay>(),
 			GetComponent<GUI_Meeting>(),
 			GetComponent<GUI_RelationshipsDisplay>(),
-			GetComponent<GUI_IndividualDisplay>()
+			GetComponent<GUI_IndividualDisplay>(),
+			GetComponent<GUI_Crafting>()
 		};
 		/*
 		IGUIMenu a = GetComponent<GUI_StatsDisplay>();

@@ -11,7 +11,7 @@ public class GUI_Inventory : MonoBehaviour {
 	private float buttonWidth = 100f;
 	private float buttonHeight = 100f;
 	private float inventoryWidth = 300f;
-	private float inventoryHeight = 500f;
+	private float inventoryHeight = 300f;
 	private float currentInventoryWidth = 0;
 	private float resizeRate = 25f;
 
@@ -46,9 +46,15 @@ public class GUI_Inventory : MonoBehaviour {
 			}
 		}
 		// draw the window itself
-		GUILayout.BeginArea (new Rect (Screen.width - currentInventoryWidth, Screen.height / 2 - buttonHeight, inventoryWidth, inventoryHeight));
+		Rect inventoryArea = new Rect (Screen.width - currentInventoryWidth, Screen.height / 2 - buttonHeight, inventoryWidth, inventoryHeight);
+		// background color
+		GUI.DrawTexture (inventoryArea, SaFrMo.CreateColor (Color.black));
+
+		GUILayout.BeginArea (inventoryArea);
+		// INVENTORY CONTENT
 		GUILayout.Box ("test");
 		GUILayout.EndArea();
+
 
 	}
 
