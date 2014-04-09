@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
+
+	public static Dictionary <string, int> INVENTORY = new Dictionary<string, int>() {
+		{ "3 x 5 index card", 1 }
+	};
 
 	// Player stats - all accessible without GetComponent<>()
 	public static float FULL_STOMACH { get; private set; }

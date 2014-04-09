@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GUI_StatsDisplay : MonoBehaviour, IGUIMenu {
+public class GUI_StatsDisplay : IGUIMenu {
 
 	// interface members
-	public string ButtonName() {
+	public override string ButtonName() {
 		return "Personal View";
 	}
 
-	public void Display () {
+	public override void Display () {
 		DISPLAYED = true;
 	}
 	
-	public void Hide() {
+	public override void Hide() {
 		DISPLAYED = false;
 	}
 

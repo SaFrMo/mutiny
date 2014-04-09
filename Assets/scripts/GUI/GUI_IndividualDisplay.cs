@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GUI_IndividualDisplay : MonoBehaviour, IGUIMenu {
+public class GUI_IndividualDisplay : IGUIMenu {
 
-	public string ButtonName () {
+	public override string ButtonName () {
 		return "Individual Information";
 	}
 
-	public void Display () {
+	public override void Display () {
 		DISPLAYED = true;
 	}
 
-	public void Hide () {
+	public override void Hide () {
 		DISPLAYED = false;
 	}
 

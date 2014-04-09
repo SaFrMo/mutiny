@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GUI_Meeting : MonoBehaviour, IGUIMenu {
+public class GUI_Meeting : IGUIMenu {
 
 	// interface members
-	public string ButtonName() {
+	public override string ButtonName() {
 		return "Meeting with Liaison";
 	}
 
-	public void Display () {
+	public override void Display () {
 		DISPLAYED = true;
 	}
 
-	public void Hide() {
+	public override void Hide() {
 		DISPLAYED = false;
 	}
 
@@ -144,8 +144,12 @@ public class GUI_Meeting : MonoBehaviour, IGUIMenu {
 						}
 					}
 					else {
-						errorMessage = "I won't have time for that many errands.";
-						ordersLocation = Orders.ErrorMessage;
+						if (ToDoList.TODO_LIST.Contains (string.Format ("Talk to {0}.", go.name))) {
+							SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
+						}
+						else {
+							SET_LIAISON_SPEECH ("I won't have time for that many errands.");
+						}
 					}
 				}
 			}

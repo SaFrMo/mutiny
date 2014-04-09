@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Vectrosity;
 
-public class GUI_RelationshipsDisplay : MonoBehaviour, IGUIMenu {
+public class GUI_RelationshipsDisplay : IGUIMenu {
 
 	// interface members
-	public string ButtonName() {
+	public override string ButtonName() {
 		return "Social View";
 	}
 
-	public void Display () {
+	public override void Display () {
 		DISPLAYED = true;
 	}
 	
-	public void Hide() {
+	public override void Hide() {
 		// TODO: Add saving functionality
 		DISPLAYED = false;
 		DestroyAndClearVectorLineReference();

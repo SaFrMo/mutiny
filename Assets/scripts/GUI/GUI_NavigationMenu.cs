@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-interface IGUIMenu
+public class IGUIMenu : MonoBehaviour
 {
-	string ButtonName();
-	void Display();
-	void Hide();
+	public virtual string ButtonName() { return string.Empty; }
+	public virtual void Display() {}
+	public virtual void Hide() {}
 }
 
 public class GUI_NavigationMenu : MonoBehaviour {
@@ -50,15 +50,18 @@ public class GUI_NavigationMenu : MonoBehaviour {
 		}
 	}
 
+	public static Rect INVENTORY_LOCATION;
+
 	void OnGUI () {
 		GUI.skin = skin;
 
 		GUILayout.BeginArea (new Rect (Screen.width * .125f, 0, Screen.width * .75f, Screen.height * .125f));
 		GUILayout.BeginHorizontal ();
 
+
+
 		// draw all buttons
 		foreach (IGUIMenu x in menuArray) {
-
 			// if button is clicked...
 			if (GUILayout.Button (x.ButtonName())) {
 				// cycle through all IGUIMenus and make sure selected one isn't the clicked one
