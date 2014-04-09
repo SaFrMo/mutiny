@@ -5,6 +5,8 @@ public class GUI_Inventory : MonoBehaviour {
 
 	public GUISkin skin;
 
+	public KeyCode inventoryHotkey = KeyCode.I;
+
 	private float alpha = 0;
 	private float buttonWidth = 100f;
 	private float buttonHeight = 100f;
@@ -14,6 +16,12 @@ public class GUI_Inventory : MonoBehaviour {
 	private float resizeRate = 25f;
 
 	private bool showInventory = false;
+
+	private void InventoryHotkey() {
+		if (Input.GetKeyDown (inventoryHotkey)) {
+			showInventory = !showInventory;
+		}
+	}
 	
 
 	private void DrawInventoryButton () {
@@ -42,6 +50,10 @@ public class GUI_Inventory : MonoBehaviour {
 		GUILayout.Box ("test");
 		GUILayout.EndArea();
 
+	}
+
+	void Update () {
+		InventoryHotkey();
 	}
 
 	void OnGUI () {
