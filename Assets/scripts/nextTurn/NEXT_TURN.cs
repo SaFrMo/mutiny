@@ -17,5 +17,6 @@ public class NEXT_TURN : MonoBehaviour {
 	public static void GO () {
 		g.NextTurn();
 		r.NextTurn();
+		// TODO: To-do list handling
 	}
 }

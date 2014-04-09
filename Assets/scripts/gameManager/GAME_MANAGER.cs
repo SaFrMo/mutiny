@@ -80,13 +80,4 @@ public class GAME_MANAGER : MonoBehaviour {
 			}
 		}
 	}
-
-
-
-	// TODO: Remove. Testing purposes only.
-	void OnGUI () {
-		if (GUI.Button (new Rect(0, 0, 100f, 100f), "Next Turn")) {
-			NEXT_TURN.GO ();
-		}
-	}
 }

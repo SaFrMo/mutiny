@@ -112,15 +112,16 @@ public class GUI_Meeting : IGUIMenu {
 			if (GUILayout.Button ("Bring me...")) {
 				ordersLocation = Orders.BringMe;
 			}
-			if (GUILayout.Button ("[Contextual questions...]")) {
-				ordersLocation = Orders.ContextualQuestions;
+			GUILayout.Box ("Finish Meeting");
+			if (GUILayout.Button ("[Submit]")) {
+				NEXT_TURN.GO ();
 			}
 			break;
 
 			
 		case Orders.TalkTo:
 			foreach (GameObject go in GAME_MANAGER.Roster) {
-				if (GUILayout.Button (go.name + ".")) {
+				if (GUILayout.Button ("..." + go.name + ".")) {
 					if (numberOfTasks < maxTasks) {
 						if (ToDoList.TODO_LIST.Contains (string.Format ("Talk to {0}.", go.name))) {
 							SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
