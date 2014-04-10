@@ -78,9 +78,21 @@ public class GUI_Crafting : IGUIMenu {
 		GUILayout.BeginHorizontal();
 		GUILayout.Box (craftingList);
 		if (GUILayout.Button ("[TRY CRAFTING]")) {
-			//AttemptCrafting();
 			Product newProduct = CRAFTING_MASTER.ATTEMPT_CRAFT (itemsToCraft);
-			if (newProduct != null) { print (newProduct.Name); }
+			// crafting successful
+			if (newProduct != null) { 
+				foreach (Ingredient i in itemsToCraft) {
+					try {
+						if (i.DestroyOnUse) {
+							Player.INVENTORY.Remove (i);
+						}
+					}
+					catch { Debug.Log ("Couldn't delete item from inventory: " + i.Name); }
+				}
+				Player.INVENTORY.Add (newProduct);
+				itemsToCraft.Clear ();
+			}
+			// TODO: Crafting failure
 
 		}
 		GUILayout.EndHorizontal();

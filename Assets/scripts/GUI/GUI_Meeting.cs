@@ -77,12 +77,13 @@ public class GUI_Meeting : IGUIMenu {
 	};
 	
 	enum Orders {
-		MainMenu = 0,
-		TalkTo = 1,
-		ErrorMessage = 2,
-		ReportOn = 3,
-		BringMe = 4,
-		ContextualQuestions
+		MainMenu,
+		TalkTo,
+		ErrorMessage,
+		ReportOn,
+		BringMe,
+		ContextualQuestions,
+		Interact
 	};
 	
 	void MainMenuButton () {
@@ -112,6 +113,11 @@ public class GUI_Meeting : IGUIMenu {
 			if (GUILayout.Button ("Bring me...")) {
 				ordersLocation = Orders.BringMe;
 			}
+			// gift subheading
+			GUILayout.Box ("You and Liaison");
+			if (GUILayout.Button ("Interact with liaison...")) {
+				ordersLocation = Orders.Interact;
+			}
 			GUILayout.Box ("Finish Meeting");
 			if (GUILayout.Button ("[Submit]")) {
 				NEXT_TURN.GO ();
@@ -140,7 +146,7 @@ public class GUI_Meeting : IGUIMenu {
 
 
 
-							ordersLocation = Orders.MainMenu;
+							//ordersLocation = Orders.MainMenu;
 							numberOfTasks++;
 						}
 					}
@@ -162,6 +168,20 @@ public class GUI_Meeting : IGUIMenu {
 			break;
 			
 		case Orders.BringMe:
+			foreach (Ingredient i in CRAFTING_MASTER.BASIC_INGREDIENTS) {
+				if (GUILayout.Button ("..." + i.Name + ".")) {
+					if (numberOfTasks < maxTasks) {
+						SET_LIAISON_SPEECH (string.Format ("I'll try to bring you {0}.", i.Name.ToLower()));
+						ToDoList.TODO_LIST.Add (string.Format ("Bring me {0}.", i.Name.ToLower()));
+						numberOfTasks++;
+					}
+				}
+			}
+			MainMenuButton();
+			break;
+
+		case Orders.Interact:
+
 			MainMenuButton();
 			break;
 

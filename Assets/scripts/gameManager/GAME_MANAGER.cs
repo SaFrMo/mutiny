@@ -32,12 +32,13 @@ public class GAME_MANAGER : MonoBehaviour {
 				if (relationshipPoints > MEDIUM_RELATIONSHIP) {
 					if (relationshipPoints > GOOD_RELATIONSHIP) {
 						if (relationshipPoints > EXCELLENT_RELATIONSHIP) { 
+							print ("e");
 							return RelationshipGrade.Excellent; }
-						else { return RelationshipGrade.Good; }
+						else { print ("g"); return RelationshipGrade.Good; }
 					}
-					else { return RelationshipGrade.Medium; }
+					else { print ("m"); return RelationshipGrade.Medium; }
 				}
-				else { return RelationshipGrade.Poor; }
+				else { print ("p"); return RelationshipGrade.Poor; }
 			}
 			else { return RelationshipGrade.Bad; }
 		}
@@ -49,6 +50,9 @@ public class GAME_MANAGER : MonoBehaviour {
 		switch (GET_MY_RELATIONSHIP_WITH (otherCharacter)) {
 		case RelationshipGrade.Enemy:
 			return enemy;
+			break;
+		case RelationshipGrade.Poor:
+			return poor;
 			break;
 		case RelationshipGrade.Bad:
 			return bad;

@@ -50,8 +50,9 @@ public class Player : MonoBehaviour {
 		// TODO: Modify this for default inventory
 		if (INVENTORY == null) {
 			INVENTORY = new List<Ingredient>() {
-				CRAFTING_MASTER.spuds,
-				CRAFTING_MASTER.salt
+				CRAFTING_MASTER.translation,
+				CRAFTING_MASTER.paper,
+				CRAFTING_MASTER.quill
 			};
 		}
 		Player.FULL_STOMACH = 50f;

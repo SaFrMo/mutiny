@@ -64,14 +64,23 @@ public static class CRAFTING_MASTER
 {
 	// All the ingredients in the game
 	// ======================================================================================== ALL INGREDIENTS
-	public static Ingredient spuds = new Ingredient ("spuds");
-	public static Ingredient salt = new Ingredient ("salt");
+	// Physical ingredients
+	public static Ingredient paper = new Ingredient ("3 x 5 paper");
+	public static Ingredient quill = new Ingredient ("A quill");
 	public static Ingredient nothing = new Ingredient ("Nothing in inventory");
+
+	// Mental ingredients
+	public static Ingredient translation = new Ingredient ("Knowledge of English and Russian", false);
+
+	// Basic items that the Liaison can bring the player
+	public static List<Ingredient> BASIC_INGREDIENTS = new List<Ingredient>() {
+		paper, quill
+	};
 
 	// List of all the recipes in the game
 	// ======================================================================================== ALL RECIPES
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
-		new Product ("French Fries", new List<Ingredient>() { spuds, salt })
+		new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation })
 	};
 
 	private static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {
