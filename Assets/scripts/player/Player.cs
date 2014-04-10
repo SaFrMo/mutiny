@@ -4,14 +4,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public static List<string> INVENTORY = new List<string>() {
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6"
-	};
+	public static List<Ingredient> INVENTORY = null;
 
 	// Player stats - all accessible without GetComponent<>()
 	public static float FULL_STOMACH { get; private set; }
@@ -54,6 +47,13 @@ public class Player : MonoBehaviour {
 
 	// DEFAULT VALUES - TODO: Change according to difficulty?
 	void Start () {
+		// TODO: Modify this for default inventory
+		if (INVENTORY == null) {
+			INVENTORY = new List<Ingredient>() {
+				CRAFTING_MASTER.spuds,
+				CRAFTING_MASTER.salt
+			};
+		}
 		Player.FULL_STOMACH = 50f;
 		Player.AWAKE = 50f;
 		Player.FIT = 80f;

@@ -34,14 +34,14 @@ public class GUI_Crafting : IGUIMenu {
 		cellSide = inventoryWidth / cellsPerRow;
 	}
 
-	void DrawCell (string objectName, Texture2D portrait) {
-		if (GUILayout.Button (objectName, GUILayout.Width(cellSide), GUILayout.Height(cellSide))) {
-			if (itemsToCraft.Contains (objectName)) {
-				itemsToCraft.Remove (objectName);
+	void DrawCell (Ingredient ingredient, Texture2D portrait) {
+		if (GUILayout.Button (ingredient.Name, GUILayout.Width(cellSide), GUILayout.Height(cellSide))) {
+			if (itemsToCraft.Contains (ingredient)) {
+				itemsToCraft.Remove (ingredient);
 			}
 			else {
 				if (itemsToCraft.Count < maxCraftingSize) {
-					itemsToCraft.Add (objectName);
+					itemsToCraft.Add (ingredient);
 				}
 				else {
 					//TODO: "not enough crafting space" error
@@ -52,6 +52,7 @@ public class GUI_Crafting : IGUIMenu {
 
 	void DrawInventory () {
 		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth, Screen.height * .25f, inventoryWidth, inventoryHeight));
+		if (Player.INVENTORY.Count == 0) { Player.INVENTORY.Add (CRAFTING_MASTER.nothing); }
 		for (int currentIndex = 0; currentIndex < Player.INVENTORY.Count; currentIndex++) {
 			// start a row at the first item
 			if (currentIndex == 0) { GUILayout.BeginHorizontal(); }
@@ -70,14 +71,17 @@ public class GUI_Crafting : IGUIMenu {
 
 		// representation of itemsToCraft list
 		string craftingList = string.Empty;
-		foreach (string s in itemsToCraft) {
-			craftingList += s + "\n";
+		foreach (Ingredient s in itemsToCraft) {
+			craftingList += s.Name + "\n";
 		}
 
 		GUILayout.BeginHorizontal();
 		GUILayout.Box (craftingList);
 		if (GUILayout.Button ("[TRY CRAFTING]")) {
-			AttemptCrafting();
+			//AttemptCrafting();
+			Product newProduct = CRAFTING_MASTER.ATTEMPT_CRAFT (itemsToCraft);
+			if (newProduct != null) { print (newProduct.Name); }
+
 		}
 		GUILayout.EndHorizontal();
 
@@ -88,48 +92,34 @@ public class GUI_Crafting : IGUIMenu {
 	// ==================
 
 	private int maxCraftingSize = 3;
-	private List<string> itemsToCraft = new List<string>();
-
-	private bool ListsMatch (List<string> a, List<string> b) {
-		// return false if they're not the same size
-		if (a.Count != b.Count) {
-			return false;
-		}
-		else {
-			foreach (string s in a) {
-				if (!b.Contains (s)) {
-					return false;
-				}
-			}
-			return true;
-		}
-	}
+	private List<Ingredient> itemsToCraft = new List<Ingredient>();
 
 
+
+
+
+	/*
 	private void AttemptCrafting () {
-		int resultIndex = craftingReference.FindIndex (x => ListsMatch (itemsToCraft, x));
-
-		if (resultIndex != null) {
+		//int resultIndex = craftingReference.FindIndex (x => ListsMatch (itemsToCraft, x));
+		if (resultIndex != -1) {
 			foreach (string x in itemsToCraft) {
 				Player.INVENTORY.Remove (x);
 			}
 			if (Player.INVENTORY.Count == 0) {
 				Player.INVENTORY.Add ("Inventory empty!");
 			}
+			itemsToCraft.Clear ();
 			// TODO: add crafted item
 		}
 		else {
 			// TODO: error message, no such thing
 		}
 	}
+	*/
 
 	// MAIN CRAFTING LIST
 	// TODO: clean this up. this is very sloppy.
-	private List<List<string>> craftingReference = new List<List<string>>() {
 
-		new List<string>() { "1", "2", "3" }, 	// 0
-		new List<string>() { "2", "3", "4" } 	// 1
-	};
 
 
 	// ONGUI() SECTION
@@ -138,7 +128,7 @@ public class GUI_Crafting : IGUIMenu {
 	void OnGUI () {
 		GUI.skin = skin;
 		if (DISPLAYED) {
-			itemsToCraft.Sort();
+			//itemsToCraft.Sort();
 			DrawInventory();
 			DrawCrafting();
 		}

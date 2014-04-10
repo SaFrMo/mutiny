@@ -52,7 +52,11 @@ public class GUI_Inventory : MonoBehaviour {
 
 		GUILayout.BeginArea (inventoryArea);
 		// INVENTORY CONTENT
-		GUILayout.Box ("test");
+		string inventory = string.Empty;
+		foreach (Ingredient u in Player.INVENTORY) {
+			inventory += u.Name + "\n";
+		}
+		GUILayout.Box (inventory);
 		GUILayout.EndArea();
 
 
