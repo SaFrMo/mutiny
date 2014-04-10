@@ -128,12 +128,14 @@ public class GUI_Meeting : IGUIMenu {
 		case Orders.TalkTo:
 			foreach (GameObject go in GAME_MANAGER.Roster) {
 				if (GUILayout.Button ("..." + go.name + ".")) {
-					if (numberOfTasks < maxTasks) {
-						if (ToDoList.TODO_LIST.Contains (string.Format ("Talk to {0}.", go.name))) {
-							SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
-						}
-						else {
-							ToDoList.TODO_LIST.Add (string.Format ("Talk to {0}.", go.name));
+					TalkTo task = new TalkTo(go, string.Format ("Talk to {0}", go.name));
+					if (ToDoList.TODO_LIST.Contains (task)) {
+						SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
+					}
+					else {
+						if (numberOfTasks < maxTasks) {
+				
+							ToDoList.TODO_LIST.Add (task);
 
 							SET_LIAISON_SPEECH (GAME_MANAGER.GET_RESPONSE (go,
 							                                             string.Format ("I don't see what good that'll do, but I'll talk to {0}.", go.name),
@@ -148,11 +150,7 @@ public class GUI_Meeting : IGUIMenu {
 
 							//ordersLocation = Orders.MainMenu;
 							numberOfTasks++;
-						}
-					}
-					else {
-						if (ToDoList.TODO_LIST.Contains (string.Format ("Talk to {0}.", go.name))) {
-							SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
+
 						}
 						else {
 							SET_LIAISON_SPEECH ("I won't have time for that many errands.");
@@ -171,8 +169,9 @@ public class GUI_Meeting : IGUIMenu {
 			foreach (Ingredient i in CRAFTING_MASTER.BASIC_INGREDIENTS) {
 				if (GUILayout.Button ("..." + i.Name + ".")) {
 					if (numberOfTasks < maxTasks) {
+						BringMe bring = new BringMe (i, string.Format ("Bring me {0}.", i.Name));
 						SET_LIAISON_SPEECH (string.Format ("I'll try to bring you {0}.", i.Name.ToLower()));
-						ToDoList.TODO_LIST.Add (string.Format ("Bring me {0}.", i.Name.ToLower()));
+						ToDoList.TODO_LIST.Add (bring);
 						numberOfTasks++;
 					}
 				}
@@ -214,13 +213,13 @@ public class GUI_Meeting : IGUIMenu {
 	void DrawLiaisonToDoList () {
 		GUILayout.BeginArea (new Rect (quarterScreenWidth * 3, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight * 2));
 		GUILayout.Box ("LIAISON'S TO-DO LIST.");
-		string[] tasks = ToDoList.TODO_LIST.ToArray();
+		Task[] tasks = ToDoList.TODO_LIST.ToArray();
 		// TODO: Add tooltip
-		foreach (string s in tasks) {
-			if (GUILayout.Button (s)) {
+		foreach (Task s in tasks) {
+			if (GUILayout.Button (s.Description)) {
 				ToDoList.TODO_LIST.Remove (s);
 				numberOfTasks--;
-				SET_LIAISON_SPEECH (string.Format ("Okay, I won't {0}{1}", s[0].ToString().ToLower(), s.Substring(1)));
+				SET_LIAISON_SPEECH (string.Format ("Okay, I won't {0}{1}.", s.Description[0].ToString().ToLower(), s.Description.Substring(1)));
 			}
 		}
 		GUILayout.EndArea();

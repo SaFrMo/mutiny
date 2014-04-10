@@ -4,35 +4,64 @@ using System.Collections.Generic;
 
 public class Task {
 
+	public Task (string description) {
+		_description = description;
+	}
+
+	private string _description;
+	public string Description {
+		get { return _description; }
+		set { _description = value; }
+	}
+}
+
+public class TalkTo : Task {
 	// CONSTRUCTORS
-	// ===============
-	public Task (string action) {
-		_action = action;
+	// ================
+	public TalkTo (GameObject whom, string description) : base (description) {
+		_whom = whom;
 	}
 
 	// MEMBERS
-	// ===============
-	private string _action;
-	public string Action {
-		get { return _action; }
-		set { _action = value; }
+	// ================
+	private GameObject _whom;
+	public GameObject Whom {
+		get { return _whom; }
+		set { _whom = value; }
+	}
+}
+
+public class BringMe : Task {
+	// CONSTRUCTORS
+	// ================
+	public BringMe (Ingredient what, string description) : base (description)  {
+		_what = what;
+	}
+
+	// MEMBERS
+	// ================
+	private Ingredient _what;
+	public Ingredient What {
+		get { return _what; }
+		set { _what = value; }
 	}
 
 }
 
+
+
+
+
+
+
+
+
 public class LiaisonInventory : MonoBehaviour {
 
-	// FOR FUTURE REFERENCE: A better way to do this would be to create a Task class and have the appropriate
-	// action be a member of that class. 
 
 	public static void DO_TODO_LIST () {
 		// manage each event in the to-do list
-		foreach (string s in ToDoList.TODO_LIST) {
-			if (s.Contains ("Talk to")) {
-				print ("talked!");
-			}
-		}
-		ToDoList.TODO_LIST.Clear ();
+
 	}
 
 	public static List<Ingredient> LIAISON_INVENTORY = new List<Ingredient>();
