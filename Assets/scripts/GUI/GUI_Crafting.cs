@@ -107,10 +107,16 @@ public class GUI_Crafting : IGUIMenu {
 
 
 	private void AttemptCrafting () {
-		List<string> result = craftingReference.Find (x => ListsMatch (itemsToCraft, x));
-		print (result);
-		if (result != null) {
-			itemsToCraft.Clear ();
+		int resultIndex = craftingReference.FindIndex (x => ListsMatch (itemsToCraft, x));
+
+		if (resultIndex != null) {
+			foreach (string x in itemsToCraft) {
+				Player.INVENTORY.Remove (x);
+			}
+			if (Player.INVENTORY.Count == 0) {
+				Player.INVENTORY.Add ("Inventory empty!");
+			}
+			// TODO: add crafted item
 		}
 		else {
 			// TODO: error message, no such thing
@@ -118,8 +124,11 @@ public class GUI_Crafting : IGUIMenu {
 	}
 
 	// MAIN CRAFTING LIST
+	// TODO: clean this up. this is very sloppy.
 	private List<List<string>> craftingReference = new List<List<string>>() {
-		new List<string>() { "1", "2", "3" }
+
+		new List<string>() { "1", "2", "3" }, 	// 0
+		new List<string>() { "2", "3", "4" } 	// 1
 	};
 
 
