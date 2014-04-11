@@ -31,8 +31,8 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 	
 	
 	public GUISkin skin;
-	public float cellWidth = 100f;
-	public float cellHeight = 100f;
+	public float cellWidth = 150f;
+	public float cellHeight = 150f;
 	public float spacer = 5f;
 	
 	private bool ctrlIsDown;
@@ -55,8 +55,10 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 	
 	// A character cell will display their name and your relationship with them.
 	void CharacterCell (Rect groupPosition, GameObject character) {
+		CharacterCard card = character.GetComponent<CharacterCard>();
+		GUIContent cellContent = new GUIContent(string.Format ("{0}\n{1}", character.name, card.yourRelationship), card.portrait); 
 		GUI.BeginGroup (groupPosition);
-		if (GUI.Button (new Rect (0, 0, cellWidth, cellHeight), string.Format ("{0}\n{1}", character.name, character.GetComponent<CharacterCard>().yourRelationship))) {
+		if (GUI.Button (new Rect (0, 0, cellWidth, cellHeight), cellContent)) {
 			
 			// "Control" key to manipulate single item in list of selected GOs
 			if (crewmemberVectorLineReference.ContainsKey (character)) {

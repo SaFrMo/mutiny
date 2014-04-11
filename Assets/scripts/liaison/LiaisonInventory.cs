@@ -94,6 +94,7 @@ public class LiaisonInventory : MonoBehaviour {
 		}
 		// clear the to-do list
 		ToDoList.TODO_LIST.Clear ();
+		GUI_Meeting.numberOfTasks = 0;
 	}
 
 	public static List<Ingredient> LIAISON_INVENTORY = new List<Ingredient>();

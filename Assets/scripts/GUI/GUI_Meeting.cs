@@ -68,7 +68,7 @@ public class GUI_Meeting : IGUIMenu {
 	// =========================
 	// Give Liaison his/her instructions. Bring X thing, smuggle Y thing in, talk to X person.
 	Orders ordersLocation = Orders.MainMenu;
-	int numberOfTasks = 0;
+	public static int numberOfTasks = 0;
 	int maxTasks = 3;
 	string errorMessage = string.Empty;
 	
