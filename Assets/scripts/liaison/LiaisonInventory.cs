@@ -69,9 +69,12 @@ public class LiaisonInventory : MonoBehaviour {
 		float aleaIactaEst = UnityEngine.Random.Range (0, 100);
 		if (aleaIactaEst <= what.SuccessRate) {
 			LIAISON_INVENTORY.Add (what.What); // HAH
+			// TODO: More variety in messages
+			GUI_Meeting.SET_LIAISON_SPEECH ("I brought you a few things you wanted.", false);
 		}
 		else {
-			// TODO: error message
+			// TODO: more variety, natural quality to speech
+			GUI_Meeting.SET_LIAISON_SPEECH ("I wasn't able to get a couple things.", false);
 		}
 	}
 
@@ -89,6 +92,8 @@ public class LiaisonInventory : MonoBehaviour {
 				Debug.Log ("Task not recognized: " + t.Description);
 			}
 		}
+		// clear the to-do list
+		ToDoList.TODO_LIST.Clear ();
 	}
 
 	public static List<Ingredient> LIAISON_INVENTORY = new List<Ingredient>();

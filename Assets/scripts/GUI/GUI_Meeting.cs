@@ -100,6 +100,18 @@ public class GUI_Meeting : IGUIMenu {
 			
 			// main concourse of orders
 		case Orders.MainMenu:
+			// give the player all of Liaison's items
+			if (LiaisonInventory.LIAISON_INVENTORY.Count != 0) {
+				GUILayout.Box ("Item Delivery");
+				if (GUILayout.Button ("Take all items from liaison")) {
+					foreach (Ingredient i in LiaisonInventory.LIAISON_INVENTORY) {
+						Player.INVENTORY.Add (i);
+					}
+					LiaisonInventory.LIAISON_INVENTORY.Clear ();
+				}
+			}
+
+
 			// reports subheading
 			GUILayout.Box ("Reports");
 			if (GUILayout.Button ("Report on...")) {
