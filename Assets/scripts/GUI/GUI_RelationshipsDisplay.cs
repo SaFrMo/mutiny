@@ -106,15 +106,15 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 					Vector3 otherLocation = crewmemberCellLocation[other];
 					Vector3 average = (sourceLocation + otherLocation) / 2;
 					// prevents multiple draws - places relationship cell in the middle if both are selected, otherwise leans toward source
-					if (!crewmemberVectorLineReference.ContainsKey (other)) {
+					//if (!crewmemberVectorLineReference.ContainsKey (other)) {
 						// leans toward the source to prevent drawing over each other
 						average = Vector3.MoveTowards (average, sourceLocation, crewmemberVectorLineReference[source].GetLength() * .0625f);
-					}
+					//}
 					float averageFeeling = ((source.GetComponent<CharacterCard>().relationships[other] + 
 					                         other.GetComponent<CharacterCard>().relationships[source]) / 2);
 					// TODO: custom skin
 					GUI.Box (new Rect (average.x - relationshipNumbersSize / 2, average.y - relationshipNumbersSize / 2, relationshipNumbersSize,
-					                   relationshipNumbersSize), averageFeeling.ToString ());
+					                   relationshipNumbersSize), averageFeeling.ToString (), skin.customStyles[1]);
 				}
 			}
 		}
