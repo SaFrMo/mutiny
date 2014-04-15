@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GenericChildConversation : Conversation {
+public class PlayerToCaptain : Conversation {
 
 	// IMPLEMENTATION:
 	/* GetContent is the main function here. First, it resets the following values:
@@ -54,7 +54,38 @@ public class GenericChildConversation : Conversation {
 		switch (key) {
 
 		case 0:
-			toContent = "CONTENT, MAN.";
+			toContent = "Well?";
+			AllowPlayerLines();
+			playerLines = new Dictionary<string, int>() {
+				{ "[Appeal to emotion] Captain, sir, he's just a child. He fixed his mistake.", 10 },
+				{ "[Appeal to reason] Captain, a punishment that harsh is erratic. It'll lose the faith of the crew.", 10 }
+			};
+			break;
+
+		case 10:
+			toContent = "We are in the midst of a battle this very moment. Do not falter when given an order.";
+			AllowPlayerLines();
+			playerLines = new Dictionary<string, int>() {
+				{ "[Argue tactfully] Sir, I want to support you, but this is not right.", 11 },
+				{ "[Argue coldly] Sir, it is your responsibility to maintain control of this ship, and this is not the way to do so.", 11 }
+			};
+			break;
+
+		case 11:
+			toContent = "Do it. Now.";
+			AllowPlayerLines();
+			playerLines = new Dictionary<string, int>() {
+				{ "Sir...", 90 }
+			};
+			break;
+
+		case 90:
+			toContent = "[The captain turns and walks away. Failure to obey his order will mean imprisonment, execution, or worse for you and other noncompliant hands.";
+			AllowContinue();
+			break;
+
+		case 91:
+			DoneTalking();
 			break;
 
 

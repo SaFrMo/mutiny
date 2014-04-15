@@ -46,10 +46,23 @@ public class GUI_Meeting : IGUIMenu {
 			liaisonSpeechList.Clear();
 		liaisonSpeechList = textList;
 	}
+
+
 	
 	void Start () {
 		quarterScreenWidth = Screen.width * .25f;
 		quarterScreenHeight = Screen.height * .25f;
+	}
+
+	// what happened since the last turn?
+	private static List<string> sinceLastTurn = new List<string>();
+
+	void DrawEffectsSinceLastTurn () {
+		GUILayout.BeginArea (new Rect (0, quarterScreenHeight * 2, quarterScreenWidth * 2, quarterScreenHeight));
+		foreach (string s in sinceLastTurn) {
+			GUILayout.Box (s);
+		}
+		GUILayout.EndArea();
 	}
 
 	void DrawLiaisonSpeech () {
@@ -242,6 +255,7 @@ public class GUI_Meeting : IGUIMenu {
 	void OnGUI () {
 		GUI.skin = skin;
 		if (DISPLAYED) {
+			DrawEffectsSinceLastTurn();
 			DrawLiaisonSpeech();
 			DrawDialogue();
 			DrawLiaisonToDoList();
