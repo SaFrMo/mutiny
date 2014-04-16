@@ -122,7 +122,6 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 					float averageFeeling;
 
 					// EASY: average feeling
-
 					averageFeeling = ((source.GetComponent<CharacterCard>().relationships[other] + other.GetComponent<CharacterCard>().relationships[source]) / 2);
 
 					// HARD: individual feelings
@@ -133,13 +132,18 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 					Rect rt = new Rect (average.x - relationshipNumbersSize / 2, average.y - relationshipNumbersSize / 2, relationshipNumbersSize,
 					                    relationshipNumbersSize);
 					GUI.Box (rt, averageFeeling.ToString (), skin.customStyles[1]);
-					if (rt.Contains (Event.current.mousePosition) && string.IsNullOrEmpty (relationshipSummary)) {
-						relationshipSummary = Content.GetRelationshipStatus(averageFeeling, source, other);
+					// TODO: Cache relationship summaries and prevent slowdowns
+					if (rt.Contains (Event.current.mousePosition)) {
+						if (string.IsNullOrEmpty (relationshipSummary))
+							relationshipSummary = Content.GetRelationshipStatus(averageFeeling, source.name, other.name);
+						GAME_MANAGER.ShowToolTip (relationshipSummary);
 					}
+
 					else {
-						relationshipSummary = null;
+						if (!string.IsNullOrEmpty(relationshipSummary)) {
+							relationshipSummary = null;
+						}
 					}
-					GAME_MANAGER.ShowToolTip (relationshipSummary, rt);
 				}
 			}
 		}

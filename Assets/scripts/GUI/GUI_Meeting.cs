@@ -99,6 +99,9 @@ public class GUI_Meeting : IGUIMenu {
 	public static int numberOfTasks = 0;
 	int maxTasks = 3;
 	string errorMessage = string.Empty;
+
+	GameObject reportOnA;
+	GameObject reportOnB;
 	
 	enum Reports {
 		
@@ -169,6 +172,7 @@ public class GUI_Meeting : IGUIMenu {
 			foreach (GameObject go in GAME_MANAGER.Roster) {
 				if (GUILayout.Button ("..." + go.name + ".")) {
 					TalkTo task = new TalkTo(go, string.Format ("Talk to {0}", go.name));
+					// TODO: Consolidate task management
 					if (ToDoList.TODO_LIST.Contains (task)) {
 						SET_LIAISON_SPEECH ( string.Format ("I'm already going to talk to {0}.", go.name));
 					}
@@ -202,6 +206,20 @@ public class GUI_Meeting : IGUIMenu {
 			break;
 			
 		case Orders.ReportOn:
+			foreach (GameObject character in GAME_MANAGER.Roster) {
+				if (GUILayout.Button(character.name)) {
+					// TODO: Consolidate task management
+					if (numberOfTasks < maxTasks) {
+						ToDoList.TODO_LIST.Add ("Tail " + character.name + ".");
+						SET_LIAISON_SPEECH ("I'll follow " + character.name + ".");
+						numberOfTasks++;
+					}
+					else {
+						SET_LIAISON_SPEECH ("I won't have time for that.");
+					}
+				}
+			}
+
 			MainMenuButton();
 			break;
 			

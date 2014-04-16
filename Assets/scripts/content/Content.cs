@@ -9,12 +9,12 @@ public static class Content {
 	// ===========================
 
 	// Summary of relationship status between two characters, based on the cell value in the social window.
-	public static string GetRelationshipStatus (float averageFeeling, GameObject source, GameObject other) {
+	public static string GetRelationshipStatus (float averageFeeling, string source, string other) {
 
 		// HARD: Don't refer to their relationship as an average of two values
 
 		// subject
-		string clause1 = string.Format ("{0} and {1} ", source.name, other.name);
+		string clause1 = string.Format ("{0} and {1} ", source, other);
 
 		// predicates
 		List<string> predicates;
