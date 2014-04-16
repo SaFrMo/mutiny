@@ -22,6 +22,8 @@ public class GUI_Meeting : IGUIMenu {
 		return message;
 	}
 
+	public new List<Ingredient> Requirements = null;
+
 	// class members	
 	public GUISkin skin;
 	
@@ -39,8 +41,14 @@ public class GUI_Meeting : IGUIMenu {
 	
 	private float spacer = 0;
 
-	//private string liaisonSpeechToDisplay;
-	private static List<string> liaisonSpeechList = new List<string>();
+	// Liaison Speech: The liaison will format the members of this list into a report.
+	// The default value of liaisonSpeechList is the first thing the liaison will say.
+	private static List<string> liaisonSpeechList = new List<string>() {
+		"I'm thinking you'll need some writing supplies, so I brought you a quill and a leaf of paper - I can't take too much at one time or they'll notice me. " +
+		"You'll probably need some more materials, though - what can I bring you? I can also relay information to you about " +
+		"what's going on throughout the rest of the ship. " +
+		"\n\nIn any case, you're my charge. Just say the word and it'll be done."
+	};
 	public static void SET_LIAISON_SPEECH (string text, bool clearList = true) {
 		if (clearList)
 			liaisonSpeechList.Clear ();

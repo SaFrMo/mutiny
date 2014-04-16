@@ -82,7 +82,22 @@ public class GUI_NavigationMenu : MonoBehaviour {
 				}
 			}
 			else {
-				GUILayout.Box (x.ButtonName());
+				// no options available
+				if (!Player.INVENTORY.Contains (CRAFTING_MASTER.noteSheet)) {
+					GUILayout.Box (x.ButtonName());
+				}
+				// option to unlock a screen
+				else {
+					if (GUILayout.Button (x.ButtonName() + "\nClick to spend 1 [Note Sheet] and unlock")) {
+						x.ShowInNav = true;
+						Player.INVENTORY.Remove (CRAFTING_MASTER.noteSheet);
+					}
+				}
+				// TODO: This should be more flexible - checks to see if requirements for unlocking x menu are satisfied
+				// journal unlocks everything
+				if (Player.INVENTORY.Contains (CRAFTING_MASTER.journal)) {
+					x.ShowInNav = true;
+				}
 			}
 			// shows what you could have
 			Rect rt = GUILayoutUtility.GetLastRect();//Rect(new GUIContent(x.ButtonName()), GUIStyle.none);

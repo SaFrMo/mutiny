@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GUI_IndividualDisplay : IGUIMenu {
 
@@ -19,10 +20,12 @@ public class GUI_IndividualDisplay : IGUIMenu {
 	{
 		string message = "View other crewmembers' stats and biographies.";
 		if (!ShowInNav) {
-			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+			message += "\n\nREQUIRES: Note Sheet or Journal.";
 		}
 		return message;
 	}
+
+	public new List<Ingredient> Requirements = new List<Ingredient>() { CRAFTING_MASTER.journal };
 
 	private bool DISPLAYED = false;
 

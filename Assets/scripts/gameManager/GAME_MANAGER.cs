@@ -72,7 +72,12 @@ public class GAME_MANAGER : MonoBehaviour {
 	// Tooltip system
 	public static void ShowToolTip (string message) {
 		GUI.Box (new Rect (Event.current.mousePosition.x, Event.current.mousePosition.y, 300f, 100f), message);
-		print ("showing");
+	}
+	// standalone - place anywhere
+	public static void ShowToolTip (string message, Rect reference) {
+		if (reference.Contains(Event.current.mousePosition)) {
+			ShowToolTip (message);
+		}
 	}
 	
 	

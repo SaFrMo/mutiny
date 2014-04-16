@@ -21,10 +21,12 @@ public class GUI_StatsDisplay : IGUIMenu {
 	{
 		string message = "View your personal physical and mental health.";
 		if (!ShowInNav) {
-			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+			message += "\n\nREQUIRES: Note Sheet or Journal.";
 		}
 		return message;
 	}
+
+	public new List<Ingredient> Requirements = new List<Ingredient> () { CRAFTING_MASTER.journal };
 
 	// class
 	public bool DISPLAYED = false;

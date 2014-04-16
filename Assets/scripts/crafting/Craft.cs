@@ -79,9 +79,14 @@ public static class CRAFTING_MASTER
 
 	// List of all the recipes in the game
 	// ======================================================================================== ALL RECIPES
+	public static Product englishLessons = new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation });
+	public static Product noteSheet = new Product ("Note sheet", new List<Ingredient>() { paper, quill });
+	public static Product journal = new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill });
+
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
-		new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation }),
-		new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill })
+		noteSheet,
+		englishLessons,
+		journal
 	};
 
 	private static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {

@@ -23,6 +23,8 @@ public class GUI_Crafting : IGUIMenu {
 	{
 		return "Craft items and materials";
 	}
+
+	public new List<Ingredient> Requirements = null;
 	
 	// class members
 	public GUISkin skin;
@@ -104,9 +106,14 @@ public class GUI_Crafting : IGUIMenu {
 			// crafting successful
 			if (newProduct != null) { 
 				foreach (Ingredient i in itemsToCraft) {
+
 					try {
 						if (i.DestroyOnUse) {
-							Player.INVENTORY.Remove (i);
+							//itemsToCraft.Remove (i);
+						}
+						// preserves an indestructible item
+						else {
+							Player.INVENTORY.Add (i);
 						}
 					}
 					catch { Debug.Log ("Couldn't delete item from inventory: " + i.Name); }

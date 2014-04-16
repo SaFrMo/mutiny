@@ -1,8 +1,4 @@
-﻿
-
-
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Vectrosity;
@@ -28,10 +24,12 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 	{
 		string message = "View relationships among the crew.";
 		if (!ShowInNav) {
-			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+			message += "\n\nREQUIRES: Note Sheet or Journal.";
 		}
 		return message;
 	}
+
+	public new List<Ingredient> Requirements = new List<Ingredient>() { CRAFTING_MASTER.journal };
 
 	// class
 	public bool DISPLAYED = false;
