@@ -42,23 +42,32 @@ public class GUI_Crafting : IGUIMenu {
 	
 	void DrawCell (Ingredient ingredient, Texture2D portrait) {
 		if (GUILayout.Button (ingredient.Name, GUILayout.Width(cellSide), GUILayout.Height(cellSide))) {
+			/*
 			if (itemsToCraft.Contains (ingredient)) {
 				itemsToCraft.Remove (ingredient);
 			}
 			else {
-				if (itemsToCraft.Count < maxCraftingSize) {
-					itemsToCraft.Add (ingredient);
-				}
-				else {
-					//TODO: "not enough crafting space" error
-				}
-			}			
+			*/
+			if (itemsToCraft.Count < maxCraftingSize) {
+				itemsToCraft.Add (ingredient);
+				Player.INVENTORY.Remove (ingredient);
+			}
+			else {
+				//TODO: "not enough crafting space" error
+			}
+			//}			
 		}
 	}
 	
 	void DrawInventory () {
 		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth, Screen.height * .25f, inventoryWidth, inventoryHeight));
+
 		if (Player.INVENTORY.Count == 0) { Player.INVENTORY.Add (CRAFTING_MASTER.nothing); }
+		else if (Player.INVENTORY.Count > 1 && 
+		         Player.INVENTORY.Contains (CRAFTING_MASTER.nothing)) {
+				Player.INVENTORY.Remove (CRAFTING_MASTER.nothing); 
+		}
+
 		for (int currentIndex = 0; currentIndex < Player.INVENTORY.Count; currentIndex++) {
 			// start a row at the first item
 			if (currentIndex == 0) { GUILayout.BeginHorizontal(); }
@@ -79,8 +88,13 @@ public class GUI_Crafting : IGUIMenu {
 		
 		// representation of itemsToCraft list
 		string craftingList = string.Empty;
-		foreach (Ingredient s in itemsToCraft) {
-			craftingList += s.Name + "\n";
+		// avoids editing the itemsToCraft list while iterating over it
+		Ingredient[] toCraftArray = itemsToCraft.ToArray();
+		foreach (Ingredient s in toCraftArray) {
+			if (GUILayout.Button (s.Name)) {
+				Player.INVENTORY.Add (s);
+				itemsToCraft.Remove (s);
+			}
 		}
 		
 		GUILayout.BeginHorizontal();
@@ -116,7 +130,7 @@ public class GUI_Crafting : IGUIMenu {
 	// CRAFTING SECTION
 	// ==================
 	
-	private int maxCraftingSize = 3;
+	private int maxCraftingSize = 4;
 	private List<Ingredient> itemsToCraft = new List<Ingredient>();
 	
 	

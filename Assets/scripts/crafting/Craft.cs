@@ -80,7 +80,8 @@ public static class CRAFTING_MASTER
 	// List of all the recipes in the game
 	// ======================================================================================== ALL RECIPES
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
-		new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation })
+		new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation }),
+		new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill })
 	};
 
 	private static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {
