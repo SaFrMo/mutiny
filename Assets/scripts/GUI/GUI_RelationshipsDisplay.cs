@@ -103,6 +103,7 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 	}
 	
 	private float relationshipNumbersSize = 50f;
+	private string relationshipSummary = string.Empty;
 	
 	void DrawRelationshipNumbers () {
 		// TODO: prevent multiple draws - RESOLVED?
@@ -117,11 +118,28 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 						// leans toward the source to prevent drawing over each other
 						average = Vector3.MoveTowards (average, sourceLocation, crewmemberVectorLineReference[source].GetLength() * .0625f);
 					//}
-					float averageFeeling = ((source.GetComponent<CharacterCard>().relationships[other] + 
-					                         other.GetComponent<CharacterCard>().relationships[source]) / 2);
+
+					float averageFeeling;
+
+					// EASY: average feeling
+
+					averageFeeling = ((source.GetComponent<CharacterCard>().relationships[other] + other.GetComponent<CharacterCard>().relationships[source]) / 2);
+
+					// HARD: individual feelings
+					//averageFeeling = source.GetComponent<CharacterCard>().relationships[other];
+
+
 					// TODO: custom skin
-					GUI.Box (new Rect (average.x - relationshipNumbersSize / 2, average.y - relationshipNumbersSize / 2, relationshipNumbersSize,
-					                   relationshipNumbersSize), averageFeeling.ToString (), skin.customStyles[1]);
+					Rect rt = new Rect (average.x - relationshipNumbersSize / 2, average.y - relationshipNumbersSize / 2, relationshipNumbersSize,
+					                    relationshipNumbersSize);
+					GUI.Box (rt, averageFeeling.ToString (), skin.customStyles[1]);
+					if (rt.Contains (Event.current.mousePosition) && string.IsNullOrEmpty (relationshipSummary)) {
+						relationshipSummary = Content.GetRelationshipStatus(averageFeeling, source, other);
+					}
+					else {
+						relationshipSummary = null;
+					}
+					GAME_MANAGER.ShowToolTip (relationshipSummary, rt);
 				}
 			}
 		}
