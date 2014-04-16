@@ -17,6 +17,15 @@ public class GUI_StatsDisplay : IGUIMenu {
 		DISPLAYED = false;
 	}
 
+	public override string ToolTip ()
+	{
+		string message = "View your personal physical and mental health.";
+		if (!ShowInNav) {
+			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+		}
+		return message;
+	}
+
 	// class
 	public bool DISPLAYED = false;
 	

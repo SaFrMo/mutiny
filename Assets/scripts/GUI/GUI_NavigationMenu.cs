@@ -5,8 +5,11 @@ using System.Collections.Generic;
 public class IGUIMenu : MonoBehaviour
 {
 	public virtual string ButtonName() { return string.Empty; }
+	public bool ShowInNav = false;
+	public virtual string Requirements() { return string.Empty; }
 	public virtual void Display() {}
 	public virtual void Hide() {}
+	public virtual string ToolTip () { return string.Empty; }
 }
 
 public class GUI_NavigationMenu : MonoBehaviour {
@@ -43,7 +46,7 @@ public class GUI_NavigationMenu : MonoBehaviour {
 		// this will display the default screen for a new game (the Meeting screen)
 		foreach (IGUIMenu x in menus) {
 			if (x == GetComponent<GUI_Meeting>()) {
-				x.Display ();
+				x.Display();
 			}
 			else {
 				x.Hide ();
@@ -56,25 +59,37 @@ public class GUI_NavigationMenu : MonoBehaviour {
 	void OnGUI () {
 		GUI.skin = skin;
 
-		GUILayout.BeginArea (new Rect (Screen.width * .125f, 0, Screen.width * .75f, Screen.height * .125f));
+		GUILayout.BeginArea (new Rect (0, 0, Screen.width, Screen.height * .5f));
 		GUILayout.BeginHorizontal ();
 
 
 
 		// draw all buttons
 		foreach (IGUIMenu x in menuArray) {
-			// if button is clicked...
-			if (GUILayout.Button (x.ButtonName())) {
-				// cycle through all IGUIMenus and make sure selected one isn't the clicked one
-				foreach (IGUIMenu y in menus) {
-					if (y == x) {
-						y.Display();
-					}
-					else {
-						y.Hide ();
+			// ...as long as they're marked "drawable" - use this to gradually increase the complexity of the game
+			if (x.ShowInNav) {
+				// if button is clicked...
+				if (GUILayout.Button (x.ButtonName())) {
+					// cycle through all IGUIMenus and make sure selected one isn't the clicked one
+					foreach (IGUIMenu y in menus) {
+						if (y == x) {
+							y.Display();
+						}
+						else {
+							y.Hide ();
+						}
 					}
 				}
 			}
+			else {
+				GUILayout.Box (x.ButtonName());
+			}
+			// shows what you could have
+			Rect rt = GUILayoutUtility.GetLastRect();//Rect(new GUIContent(x.ButtonName()), GUIStyle.none);
+			if (rt.Contains (Event.current.mousePosition)) {
+				GAME_MANAGER.ShowToolTip(x.ToolTip());
+			}
+
 		}
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();

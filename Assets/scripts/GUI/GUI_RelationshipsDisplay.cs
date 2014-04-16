@@ -23,7 +23,16 @@ public class GUI_RelationshipsDisplay : IGUIMenu {
 		DISPLAYED = false;
 		DestroyAndClearVectorLineReference();
 	}
-	
+
+	public override string ToolTip ()
+	{
+		string message = "View relationships among the crew.";
+		if (!ShowInNav) {
+			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+		}
+		return message;
+	}
+
 	// class
 	public bool DISPLAYED = false;
 	

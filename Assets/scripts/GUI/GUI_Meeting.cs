@@ -17,6 +17,11 @@ public class GUI_Meeting : IGUIMenu {
 		DISPLAYED = false;
 	}
 
+	public override string ToolTip () {
+		string message = "Request reports from, give orders to, obtain equipment from liaison.";
+		return message;
+	}
+
 	// class members	
 	public GUISkin skin;
 	
@@ -50,6 +55,8 @@ public class GUI_Meeting : IGUIMenu {
 
 	
 	void Start () {
+		// meeting window is the first thing available
+		base.ShowInNav = true;
 		quarterScreenWidth = Screen.width * .25f;
 		quarterScreenHeight = Screen.height * .25f;
 	}

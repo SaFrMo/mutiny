@@ -15,6 +15,15 @@ public class GUI_IndividualDisplay : IGUIMenu {
 		DISPLAYED = false;
 	}
 
+	public override string ToolTip ()
+	{
+		string message = "View other crewmembers' stats and biographies.";
+		if (!ShowInNav) {
+			message += "\n\nREQUIRES: Journal [paper, writing implement].";
+		}
+		return message;
+	}
+
 	private bool DISPLAYED = false;
 
 	// class members

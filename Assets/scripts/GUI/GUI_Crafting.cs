@@ -18,6 +18,11 @@ public class GUI_Crafting : IGUIMenu {
 	public override void Display () {
 		DISPLAYED = true;
 	}
+
+	public override string ToolTip ()
+	{
+		return "Craft items and materials";
+	}
 	
 	// class members
 	public GUISkin skin;
@@ -29,6 +34,7 @@ public class GUI_Crafting : IGUIMenu {
 	private float cellsPerRow = 5f;
 	
 	void Start () {
+		base.ShowInNav = true;
 		inventoryWidth = Screen.width * .25f;
 		inventoryHeight = Screen.height * .45f;
 		cellSide = inventoryWidth / cellsPerRow;
