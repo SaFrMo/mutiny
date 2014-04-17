@@ -97,11 +97,22 @@ public class GUI_Meeting : IGUIMenu {
 	// Give Liaison his/her instructions. Bring X thing, smuggle Y thing in, talk to X person.
 	Orders ordersLocation = Orders.MainMenu;
 	public static int numberOfTasks = 0;
-	int maxTasks = 3;
-	string errorMessage = string.Empty;
+	private int maxTasks = 3;
+	private string errorMessage = string.Empty;
 
-	GameObject reportOnA;
-	GameObject reportOnB;
+	private GameObject reportOnA;
+	private GameObject reportOnB;
+
+	private void AddToToDoList (Task task, string confirmationSpeech, string errorMessage = "I won't have time for that.") {
+		if (numberOfTasks < maxTasks) {
+			ToDoList.TODO_LIST.Add (task);
+			SET_LIAISON_SPEECH (confirmationSpeech);
+			numberOfTasks++;
+		}
+		else {
+			SET_LIAISON_SPEECH (errorMessage);
+		}
+	}
 	
 	enum Reports {
 		
@@ -147,6 +158,9 @@ public class GUI_Meeting : IGUIMenu {
 			GUILayout.Box ("Reports");
 			if (GUILayout.Button ("Report on...")) {
 				ordersLocation = Orders.ReportOn;
+			}
+			if (GUILayoutUtility.GetLastRect().Contains (Event.current.mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Tailing a crewmember can reveal influential new information about them.");
 			}
 			// orders subheading
 			GUILayout.Box ("Orders");
@@ -209,14 +223,8 @@ public class GUI_Meeting : IGUIMenu {
 			foreach (GameObject character in GAME_MANAGER.Roster) {
 				if (GUILayout.Button(character.name)) {
 					// TODO: Consolidate task management
-					if (numberOfTasks < maxTasks) {
-						ToDoList.TODO_LIST.Add ("Tail " + character.name + ".");
-						SET_LIAISON_SPEECH ("I'll follow " + character.name + ".");
-						numberOfTasks++;
-					}
-					else {
-						SET_LIAISON_SPEECH ("I won't have time for that.");
-					}
+					Tail follow = new Tail (character, string.Format ("Follow {0}.", character.name));
+					AddToToDoList (follow, "I'll try to follow " + character.name + ".");
 				}
 			}
 

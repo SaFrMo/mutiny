@@ -60,6 +60,19 @@ public class Product : Ingredient {
 	}
 }
 
+public class Gossip : Ingredient
+{
+	public Gossip (GameObject onWhom, string name) : base (name) {
+		_onWhom = onWhom;
+	}
+
+	private GameObject _onWhom;
+	public GameObject OnWhom {
+		get { return _onWhom; }
+		set { _onWhom = value; }
+	}
+}
+
 public static class CRAFTING_MASTER
 {
 	// All the ingredients in the game
@@ -71,6 +84,7 @@ public static class CRAFTING_MASTER
 
 	// Mental ingredients
 	public static Ingredient translation = new Ingredient ("Knowledge of English and Russian", false);
+	public static Gossip gossipAdam;
 
 	// Basic items that the Liaison can bring the player
 	public static List<Ingredient> BASIC_INGREDIENTS = new List<Ingredient>() {
@@ -81,13 +95,15 @@ public static class CRAFTING_MASTER
 	// ======================================================================================== ALL RECIPES
 	public static Product englishLessons = new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation });
 	public static Product noteSheet = new Product ("Note sheet", new List<Ingredient>() { paper, quill });
-	public static Product journal = new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill });
+	public static Product journal = new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill });	
 
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
 		noteSheet,
 		englishLessons,
 		journal
 	};
+
+
 
 	private static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {
 		// return false if they're not the same size

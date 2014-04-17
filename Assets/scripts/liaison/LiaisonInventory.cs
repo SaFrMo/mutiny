@@ -55,6 +55,27 @@ public class BringMe : Task {
 
 }
 
+public class Tail : Task {
+	// CONSTRUCTORS
+	public Tail (GameObject whom, string description, float successRate = .75f) : base (description) {
+		_whom = whom;
+		_successRate = successRate;
+	}
+
+	// MEMBERS
+	private GameObject _whom;
+	public GameObject Whom {
+		get { return _whom; }
+		set { _whom = value; }
+	}
+
+	private float _successRate;
+	public float SuccessRate {
+		get { return _successRate * 100f; }
+		set { _successRate = value; }
+	}
+}
+
 
 
 
@@ -78,6 +99,20 @@ public class LiaisonInventory : MonoBehaviour {
 		}
 	}
 
+	private static void Follow (Tail whom) {
+		float aleaIactaEst = UnityEngine.Random.Range (0, 100);
+		print (whom.SuccessRate);
+		if (aleaIactaEst <= whom.SuccessRate) {
+			//Ingredient gossip = new Ingredient ("Information on " + whom.Whom.name, false);
+			//Gossip result = CRAFTING_MASTER.CreateGossip (whom.Whom);
+			//LIAISON_INVENTORY.Add (result);
+		}
+		else {
+			// TODO: more variety, natural quality to speech
+			GUI_Meeting.SET_LIAISON_SPEECH ("No luck on following " + whom.Whom.name + ".", false);
+		}
+	}
+
 
 	public static void DO_TODO_LIST () {
 		// manage each event in the to-do list
@@ -87,6 +122,9 @@ public class LiaisonInventory : MonoBehaviour {
 			}
 			else if (t is TalkTo) {
 				// TODO: talking code
+			}
+			else if (t is Tail) {
+				Follow (t as Tail);
 			}
 			else {
 				Debug.Log ("Task not recognized: " + t.Description);

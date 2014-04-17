@@ -78,4 +78,13 @@ public static class SaFrMo {
 		string toReturn = source[UnityEngine.Random.Range (0, source.Count - 1)];
 		return toReturn;
 	}
+
+	/// <summary>
+	/// Converts screen coordinates to GUI coordinates.
+	/// </summary>
+	/// <returns>The Y to GUI.</returns>
+	/// <param name="currentY">Current y.</param>
+	public static float InputYToGUIY (float currentY) {
+		return -currentY + Screen.height;
+	}
 }

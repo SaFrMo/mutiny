@@ -79,11 +79,11 @@ public class GAME_MANAGER : MonoBehaviour {
 					if (relationshipPoints > GOOD_RELATIONSHIP) {
 						if (relationshipPoints > EXCELLENT_RELATIONSHIP) { 
 							return RelationshipGrade.Excellent; }
-						else { print ("g"); return RelationshipGrade.Good; }
+						else { return RelationshipGrade.Good; }
 					}
-					else { print ("m"); return RelationshipGrade.Medium; }
+					else { return RelationshipGrade.Medium; }
 				}
-				else { print ("p"); return RelationshipGrade.Poor; }
+				else { return RelationshipGrade.Poor; }
 			}
 			else { return RelationshipGrade.Bad; }
 		}
@@ -115,8 +115,14 @@ public class GAME_MANAGER : MonoBehaviour {
 	}
 
 	// Tooltip system
-	public static void ShowToolTip (string message) {
+	public static void ToolTipBox (string message) {
 		GUI.Box (new Rect (Event.current.mousePosition.x, Event.current.mousePosition.y, 300f, 100f), message);
+	}
+
+	private static void WindowFun (int id) {}
+	public static void ShowToolTip (string message) {
+		GUI.Window (0, new Rect (Input.mousePosition.x, SaFrMo.InputYToGUIY(Input.mousePosition.y), 300f, 100f), WindowFun, message);
+		GUI.BringWindowToFront(0);
 	}
 	// standalone - place anywhere
 	public static void ShowToolTip (string message, Rect reference) {
