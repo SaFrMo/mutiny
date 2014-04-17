@@ -52,11 +52,17 @@ public class GUI_Inventory : MonoBehaviour {
 
 		GUILayout.BeginArea (inventoryArea);
 		// INVENTORY CONTENT
-		string inventory = string.Empty;
 		foreach (Ingredient u in Player.INVENTORY) {
-			inventory += u.Name + "\n";
+			GUILayout.Box (u.Name);
+			if (u.Description != string.Empty) {
+				if (GUILayoutUtility.GetLastRect().Contains (Event.current.mousePosition)) {
+					GAME_MANAGER.ShowToolTip (u.Description);
+				}
+			}
 		}
-		GUILayout.Box (inventory);
+
+
+
 		GUILayout.EndArea();
 
 

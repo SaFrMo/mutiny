@@ -13,10 +13,20 @@ public class Ingredient : UsableItem {
 	public Ingredient (string name) {
 		_name = name;
 		_destroyOnUse = true;
+		_description = string.Empty;
 	}
 
 	public Ingredient (string name, bool destroyOnUse) {
 		_name = name;
+		_destroyOnUse = destroyOnUse;
+		_description = string.Empty;
+	}
+
+	public Ingredient (string name, string description) : this(name) {
+		_description = description;
+	}
+
+	public Ingredient (string name, string description, bool destroyOnUse) : this(name, description) {
 		_destroyOnUse = destroyOnUse;
 	}
 
@@ -26,6 +36,12 @@ public class Ingredient : UsableItem {
 	public string Name {
 		get { return _name; }
 		set { _name = value; }
+	}
+
+	protected string _description;
+	public string Description {
+		get { return _description; }
+		set { _description = value; }
 	}
 
 	// ingredients that are not destroyed on use are things like memories, emotions, etc.
@@ -62,15 +78,9 @@ public class Product : Ingredient {
 
 public class Gossip : Ingredient
 {
-	public Gossip (GameObject onWhom, string name) : base (name) {
-		_onWhom = onWhom;
+	public Gossip (string name, string theDirt) : base (name, theDirt) {
 	}
 
-	private GameObject _onWhom;
-	public GameObject OnWhom {
-		get { return _onWhom; }
-		set { _onWhom = value; }
-	}
 }
 
 public static class CRAFTING_MASTER
@@ -84,7 +94,10 @@ public static class CRAFTING_MASTER
 
 	// Mental ingredients
 	public static Ingredient translation = new Ingredient ("Knowledge of English and Russian", false);
-	public static Gossip gossipAdam;
+	public static Gossip gossipAdam = new Gossip ("Gossip on Adam", "Apparently Adam's a cheater at cards.");
+	public static Gossip gossipBetty;
+	public static Gossip gossipCleaver;
+	public static Gossip gossipDerek;
 
 	// Basic items that the Liaison can bring the player
 	public static List<Ingredient> BASIC_INGREDIENTS = new List<Ingredient>() {
@@ -96,12 +109,30 @@ public static class CRAFTING_MASTER
 	public static Product englishLessons = new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation });
 	public static Product noteSheet = new Product ("Note sheet", new List<Ingredient>() { paper, quill });
 	public static Product journal = new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill });	
+	public static Product blackmail = new Product ("Blackmail note about Adam", new List<Ingredient>() { paper, quill, gossipAdam });
 
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
 		noteSheet,
 		englishLessons,
-		journal
+		journal,
+		blackmail
 	};
+
+	// special gossip section
+	public static void CreateGossip (GameObject onWhom) {
+		// TODO: gossip variation
+		switch (onWhom.name) {
+		case "Adam":
+			LiaisonInventory.LIAISON_INVENTORY.Add (gossipAdam);
+			break;
+		default:
+			Debug.Log ("Couldn't find " + onWhom.name);
+			break;
+		};
+
+
+
+	}
 
 
 

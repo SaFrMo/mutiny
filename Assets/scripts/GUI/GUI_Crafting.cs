@@ -106,7 +106,6 @@ public class GUI_Crafting : IGUIMenu {
 			// crafting successful
 			if (newProduct != null) { 
 				foreach (Ingredient i in itemsToCraft) {
-
 					try {
 						if (i.DestroyOnUse) {
 							//itemsToCraft.Remove (i);

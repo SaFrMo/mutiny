@@ -104,8 +104,7 @@ public class LiaisonInventory : MonoBehaviour {
 		print (whom.SuccessRate);
 		if (aleaIactaEst <= whom.SuccessRate) {
 			//Ingredient gossip = new Ingredient ("Information on " + whom.Whom.name, false);
-			//Gossip result = CRAFTING_MASTER.CreateGossip (whom.Whom);
-			//LIAISON_INVENTORY.Add (result);
+			CRAFTING_MASTER.CreateGossip (whom.Whom);
 		}
 		else {
 			// TODO: more variety, natural quality to speech
