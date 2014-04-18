@@ -132,21 +132,25 @@ public class GAME_MANAGER : MonoBehaviour {
 	}
 
 	// TUTORIAL FUNCTIONS
+	// ======================================
 	public GUISkin skin;
-	private void TutorialCell (string message, float rectX = 10f, float rectY = 200f, float rectWidth = 300f, float rectHeight = 200f) {
+	private void TutorialCell (string message, float rectX = 10f, float rectY = 200f, float rectWidth = 300f, float rectHeight = 200f, bool drawButtons = true) {
 		GUI.BeginGroup (new Rect (rectX, rectY, rectWidth, rectHeight));
 		GUI.Box (new Rect (0, 0, rectWidth, rectHeight * 2f / 3f), message);
-		if (GUI.Button (new Rect (0, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Previous")) {
-			TUTORIAL_PROGRESS--;
-		}
-		if (GUI.Button (new Rect (rectWidth / 2, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Next")) {
-			TUTORIAL_PROGRESS++;
+		if (drawButtons) {
+			if (GUI.Button (new Rect (0, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Previous")) {
+				TUTORIAL_PROGRESS--;
+			}
+			if (GUI.Button (new Rect (rectWidth / 2, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Next")) {
+				TUTORIAL_PROGRESS++;
+			}
 		}
 		GUI.EndGroup();
 	}
 	public static bool TUTORIAL = true;
+	GUI_Crafting craftingWindow = null;
 	private bool drawn = false;
-	public static int TUTORIAL_PROGRESS = 0;
+	public int TUTORIAL_PROGRESS = 0;
 	private void RunTutorial () {
 		// TODO: TUTORIAL
 		// tutorial's always at the front
@@ -177,6 +181,56 @@ public class GAME_MANAGER : MonoBehaviour {
 		case 5:
 			TutorialCell ("You can check up on your inventory here - either by clicking the \"Inventory\" tab or pressing TAB.",
 			              Screen.width * 3 / 4);
+			break;
+
+		case 6:
+			if (craftingWindow == null) {
+				craftingWindow = GameObject.Find ("GUI").GetComponent<GUI_Crafting>();
+			}
+			if (!craftingWindow.GetDisplayed()) {
+				TutorialCell ("To use items in your inventory, click on \"Item Creation\" in the navigation bar.",
+				              Screen.width - 300, 100f, 300, 200, false);
+			}
+			else {
+				TutorialCell ("In this window, you can craft your basic items into more complicated - and more useful - ones.");
+			}
+			break;
+
+		case 7:
+			TutorialCell ("Let's start with a very practical item - the Note Sheet. You can use Note Sheets to unlock more windows in the Navigation Bar, which will help you plan your coup more effectively.",
+			              Screen.width / 2 - 300 / 2, 50f);
+			break;
+
+		case 8:
+			TutorialCell ("You start the game knowing how to make a note sheet, so the required materials are listed under the tab on the left side of the screen.",
+			              Screen.width / 2 - 300 / 2, 50f);
+			break;
+
+		case 9:
+			TutorialCell ("Click on \"Note Sheet\" to view the required materials to craft a Note Sheet, then click \"Next\" to continue.", Screen.width * .25f);
+			break;
+
+		case 10:
+			TutorialCell ("You have a leaf of paper and a quill already, so click on each item to add it to construction.",
+			              10, 200, 300, 200, false);
+			// TODO: will this suck up too much memory?
+			if (CRAFTING_MASTER.ListsMatch (GameObject.Find ("GUI").GetComponent<GUI_Crafting>().itemsToCraft, CRAFTING_MASTER.noteSheet.Recipe)) {
+				TUTORIAL_PROGRESS++;
+			}
+			break;
+
+		case 11:
+			TutorialCell ("Good! Click on \"Try Crafting\" to create the note sheet.",
+			              10, 200, 300, 200, false);
+			if (Player.INVENTORY.Contains (CRAFTING_MASTER.noteSheet)) {
+				TUTORIAL_PROGRESS++;
+			}
+			break;
+
+		case 12:
+			TutorialCell ("Excellent work! Now, use this note sheet to unlock the Social View, one of the most important windows in Mutiny.",
+			              10, 200, 300, 200, false);
+			// TODO: pick up from here
 			break;
 
 		default:

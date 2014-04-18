@@ -6,6 +6,9 @@ public class GUI_Crafting : IGUIMenu {
 	
 	// inherited members
 	private bool DISPLAYED = false;
+	public bool GetDisplayed () {
+		return DISPLAYED;
+	}
 	
 	public override string ButtonName () {
 		return "Item Creation";
@@ -165,7 +168,7 @@ public class GUI_Crafting : IGUIMenu {
 	// ==================
 	
 	private int maxCraftingSize = 4;
-	private List<Ingredient> itemsToCraft = new List<Ingredient>();
+	public List<Ingredient> itemsToCraft = new List<Ingredient>();
 	
 	
 	// ONGUI() SECTION
