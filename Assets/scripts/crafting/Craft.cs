@@ -146,7 +146,7 @@ public static class CRAFTING_MASTER
 
 
 
-	private static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {
+	public static bool ListsMatch (List<Ingredient> a, List<Ingredient> b) {
 		// return false if they're not the same size
 		if (a.Count != b.Count) {
 			return false;

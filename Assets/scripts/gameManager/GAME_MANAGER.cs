@@ -121,7 +121,7 @@ public class GAME_MANAGER : MonoBehaviour {
 
 	private static void WindowFun (int id) {}
 	public static void ShowToolTip (string message) {
-		GUI.Window (0, new Rect (Input.mousePosition.x, SaFrMo.InputYToGUIY(Input.mousePosition.y), 300f, 150f), WindowFun, message);
+		GUI.Window (0, new Rect (Input.mousePosition.x + 10f, SaFrMo.InputYToGUIY(Input.mousePosition.y), 300f, 150f), WindowFun, message);
 		GUI.BringWindowToFront(0);
 	}
 	// standalone - place anywhere
@@ -129,6 +129,68 @@ public class GAME_MANAGER : MonoBehaviour {
 		if (reference.Contains(Event.current.mousePosition)) {
 			ShowToolTip (message);
 		}
+	}
+
+	// TUTORIAL FUNCTIONS
+	public GUISkin skin;
+	private void TutorialCell (string message, float rectX = 10f, float rectY = 200f, float rectWidth = 300f, float rectHeight = 200f) {
+		GUI.BeginGroup (new Rect (rectX, rectY, rectWidth, rectHeight));
+		GUI.Box (new Rect (0, 0, rectWidth, rectHeight * 2f / 3f), message);
+		if (GUI.Button (new Rect (0, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Previous")) {
+			TUTORIAL_PROGRESS--;
+		}
+		if (GUI.Button (new Rect (rectWidth / 2, rectHeight * 2 / 3, rectWidth / 2, rectHeight / 3), "Next")) {
+			TUTORIAL_PROGRESS++;
+		}
+		GUI.EndGroup();
+	}
+	public static bool TUTORIAL = true;
+	private bool drawn = false;
+	public static int TUTORIAL_PROGRESS = 0;
+	private void RunTutorial () {
+		// TODO: TUTORIAL
+		// tutorial's always at the front
+		//GUI.depth = 0;
+		switch (TUTORIAL_PROGRESS) {
+		case 0:
+			TutorialCell ("Welcome to the Mutiny tutorial! Click \"Next\" to begin learning how to play Mutiny. Toggle the tutorial on or off in the pause menu (ESC).");
+			break;
+
+		case 1:
+			TutorialCell ("You have been imprisoned by your erratic and unstable captain, and will need the help of your liaison to orchestrate a mutiny.");
+			break;
+
+		case 2:
+			TutorialCell ("This is the Meeting window, where you will interact with your liaison directly.");
+			break;
+
+		case 3:
+			TutorialCell ("Your liaison's speech to you is visible here; he will also report to you on the progress of your orders and requests.",
+			              10, Screen.height * .5f);
+			break;
+
+		case 4:
+			TutorialCell ("You can make orders and requests here. Your liaison has normal crew duties on top of assisting you, and so will only be able to complete a certain number of actions per turn.",
+			              Screen.width / 2);
+			break;
+
+		case 5:
+			TutorialCell ("You can check up on your inventory here - either by clicking the \"Inventory\" tab or pressing TAB.",
+			              Screen.width * 3 / 4);
+			break;
+
+		default:
+			TUTORIAL_PROGRESS = 0;
+			break;
+		};
+
+	}
+
+	void OnGUI() {
+		GUI.skin = skin;
+		//if (TUTORIAL) {
+			RunTutorial();
+		//}
 	}
 	
 	

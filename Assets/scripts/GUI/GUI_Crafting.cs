@@ -43,9 +43,11 @@ public class GUI_Crafting : IGUIMenu {
 	}
 
 	private Product expandedRecipe = null;
+	private Vector2 scrollPosition;
 
 	void DrawKnownRecipes () {
 		GUILayout.BeginArea (new Rect (GAME_MANAGER.SPACER, Screen.height * .25f, inventoryWidth * .25f, inventoryHeight));
+		scrollPosition = GUILayout.BeginScrollView (scrollPosition, GUILayout.Width(inventoryWidth * .25f - 10f), GUILayout.Height(inventoryHeight));
 		GUILayout.Box ("Recipes");
 		foreach (Product p in CRAFTING_MASTER.KNOWN_RECIPES) {
 			if (GUILayout.Button (string.Format ("[{0}]", p.Name))) {
@@ -58,10 +60,12 @@ public class GUI_Crafting : IGUIMenu {
 			}
 			if ( expandedRecipe == p ) {
 				foreach (Ingredient i in p.Recipe) {
-					GUILayout.Box (string.Format ("\t-{0}", i.Name));
+					GUILayout.Box (string.Format ("-{0}", i.Name));
 				}
 			}
+
 		}
+		GUILayout.EndScrollView();
 		GUILayout.EndArea();
 	}
 
@@ -124,7 +128,7 @@ public class GUI_Crafting : IGUIMenu {
 		}
 		
 		GUILayout.BeginHorizontal();
-		GUILayout.Box (craftingList);
+		//GUILayout.Box (craftingList);
 		if (GUILayout.Button ("[TRY CRAFTING]")) {
 			Product newProduct = CRAFTING_MASTER.ATTEMPT_CRAFT (itemsToCraft);
 			// crafting successful

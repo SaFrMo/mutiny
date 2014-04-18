@@ -190,6 +190,9 @@ public class GUI_Meeting : IGUIMenu {
 			if (GUILayout.Button ("Interact with liaison...")) {
 				ordersLocation = Orders.Interact;
 			}
+			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Talk or give items to your liaison to increase their effectiveness.");
+			}
 			GUILayout.Box ("Finish Meeting");
 			if (GUILayout.Button ("[Submit]")) {
 				NEXT_TURN.GO ();
