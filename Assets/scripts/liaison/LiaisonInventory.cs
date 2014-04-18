@@ -91,7 +91,7 @@ public class LiaisonInventory : MonoBehaviour {
 		if (aleaIactaEst <= what.SuccessRate) {
 			LIAISON_INVENTORY.Add (what.What); // HAH
 			// TODO: More variety in messages
-			GUI_Meeting.SET_LIAISON_SPEECH ("I brought you a few things you wanted.", false);
+			GUI_Meeting.SET_LIAISON_SPEECH ("I brought you " + what.What.Name + ".", false);
 		}
 		else {
 			// TODO: more variety, natural quality to speech
@@ -104,6 +104,7 @@ public class LiaisonInventory : MonoBehaviour {
 		print (whom.SuccessRate);
 		if (aleaIactaEst <= whom.SuccessRate) {
 			//Ingredient gossip = new Ingredient ("Information on " + whom.Whom.name, false);
+			//GUI_Meeting.SET_LIAISON_SPEECH (
 			CRAFTING_MASTER.CreateGossip (whom.Whom);
 		}
 		else {

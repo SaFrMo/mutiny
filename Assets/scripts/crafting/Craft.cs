@@ -94,7 +94,7 @@ public static class CRAFTING_MASTER
 
 	// Mental ingredients
 	public static Ingredient translation = new Ingredient ("Knowledge of English and Russian", false);
-	public static Gossip gossipAdam = new Gossip ("Gossip on Adam", "Apparently Adam's a cheater at cards.");
+	public static Gossip gossipAdam = new Gossip ("Gossip on Adam", "Apparently he's a cheater at cards.");
 	public static Gossip gossipBetty;
 	public static Gossip gossipCleaver;
 	public static Gossip gossipDerek;
@@ -120,15 +120,20 @@ public static class CRAFTING_MASTER
 
 	// special gossip section
 	public static void CreateGossip (GameObject onWhom) {
-		// TODO: gossip variation
+		Gossip whichGossip = null;
+		// TODO: Variety
 		switch (onWhom.name) {
 		case "Adam":
 			LiaisonInventory.LIAISON_INVENTORY.Add (gossipAdam);
+			whichGossip = gossipAdam;
 			break;
 		default:
 			Debug.Log ("Couldn't find " + onWhom.name);
 			break;
 		};
+
+		// TODO: Variety
+		GUI_Meeting.SET_LIAISON_SPEECH (string.Format ("I was able to follow {0} and get something good. {1}", onWhom.name, whichGossip.Description), false);
 
 
 

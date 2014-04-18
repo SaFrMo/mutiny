@@ -154,21 +154,26 @@ public class GUI_Meeting : IGUIMenu {
 			}
 
 
-			// reports subheading
-			GUILayout.Box ("Reports");
-			if (GUILayout.Button ("Report on...")) {
-				ordersLocation = Orders.ReportOn;
-			}
-			if (GUILayoutUtility.GetLastRect().Contains (Event.current.mousePosition)) {
-				GAME_MANAGER.ShowToolTip ("Tailing a crewmember can reveal influential new information about them.");
-			}
 			// orders subheading
 			GUILayout.Box ("Orders");
+			Vector2 mousePosition = Event.current.mousePosition;
+			if (GUILayout.Button ("Tail...")) {
+				ordersLocation = Orders.ReportOn;
+			}
+			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Tailing a crewmember can reveal influential new information about them.");
+			}
 			if (GUILayout.Button ("Talk to...")) {
 				ordersLocation = Orders.TalkTo;
 			}
+			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Having your liaison talk to a crewmember tends to improve that crewmember's view of your enterprise.");
+			}
 			if (GUILayout.Button ("Bring me...")) {
 				ordersLocation = Orders.BringMe;
+			}
+			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Stock up on supplies to write letters, extort loyalty, maintain your health, and more.");
 			}
 			// gift subheading
 			GUILayout.Box ("You and Liaison");
@@ -278,7 +283,7 @@ public class GUI_Meeting : IGUIMenu {
 	
 	void DrawLiaisonToDoList () {
 		GUILayout.BeginArea (new Rect (quarterScreenWidth * 3, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight * 2));
-		GUILayout.Box ("LIAISON'S TO-DO LIST.");
+		GUILayout.Box (string.Format ("LIAISON'S TO-DO LIST ({0} / {1}).", numberOfTasks, maxTasks));
 		Task[] tasks = ToDoList.TODO_LIST.ToArray();
 		// TODO: Add tooltip
 		foreach (Task s in tasks) {
@@ -286,6 +291,9 @@ public class GUI_Meeting : IGUIMenu {
 				ToDoList.TODO_LIST.Remove (s);
 				numberOfTasks--;
 				SET_LIAISON_SPEECH (string.Format ("Okay, I won't {0}{1}.", s.Description[0].ToString().ToLower(), s.Description.Substring(1)));
+			}
+			if (GUILayoutUtility.GetLastRect().Contains (Event.current.mousePosition)) {
+				GAME_MANAGER.ShowToolTip ("Click to remove this task.");
 			}
 		}
 		GUILayout.EndArea();
