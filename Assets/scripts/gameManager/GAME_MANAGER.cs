@@ -121,7 +121,7 @@ public class GAME_MANAGER : MonoBehaviour {
 
 	private static void WindowFun (int id) {}
 	public static void ShowToolTip (string message) {
-		GUI.Window (0, new Rect (Input.mousePosition.x, SaFrMo.InputYToGUIY(Input.mousePosition.y), 300f, 100f), WindowFun, message);
+		GUI.Window (0, new Rect (Input.mousePosition.x, SaFrMo.InputYToGUIY(Input.mousePosition.y), 300f, 150f), WindowFun, message);
 		GUI.BringWindowToFront(0);
 	}
 	// standalone - place anywhere

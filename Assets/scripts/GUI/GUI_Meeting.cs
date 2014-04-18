@@ -133,6 +133,16 @@ public class GUI_Meeting : IGUIMenu {
 			ordersLocation = 0;
 		}
 	}
+
+	IEnumerator TimedSweep (string message) {
+		for (;;) {
+			if (GUILayoutUtility.GetLastRect().Contains (Event.current.mousePosition)) {
+				GAME_MANAGER.ShowToolTip (message);
+			}
+			yield return new WaitForSeconds (.1f);
+		}
+	}
+
 	
 	void DrawDialogue () {
 		GUILayout.BeginArea (new Rect (quarterScreenWidth * 2, quarterScreenHeight * 2, quarterScreenWidth, quarterScreenHeight * 2));
@@ -161,13 +171,13 @@ public class GUI_Meeting : IGUIMenu {
 				ordersLocation = Orders.ReportOn;
 			}
 			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
-				GAME_MANAGER.ShowToolTip ("Tailing a crewmember can reveal influential new information about them.");
+				GAME_MANAGER.ShowToolTip ("Tailing a crewmember can reveal influential new information about them.\n\nThis is often a good way to exert pressure on people who don't agree with you.");
 			}
 			if (GUILayout.Button ("Talk to...")) {
 				ordersLocation = Orders.TalkTo;
 			}
 			if (GUILayoutUtility.GetLastRect().Contains (mousePosition)) {
-				GAME_MANAGER.ShowToolTip ("Having your liaison talk to a crewmember tends to improve that crewmember's view of your enterprise.");
+				GAME_MANAGER.ShowToolTip ("Having the liaison talk to a someone tends bring that crewmember closer to you.\n\nThis is a good way to solidify or maintain relationships with people who already agree with you.");
 			}
 			if (GUILayout.Button ("Bring me...")) {
 				ordersLocation = Orders.BringMe;

@@ -37,10 +37,34 @@ public class GUI_Crafting : IGUIMenu {
 	
 	void Start () {
 		base.ShowInNav = true;
-		inventoryWidth = Screen.width * .25f;
+		inventoryWidth = Screen.width * .5f;
 		inventoryHeight = Screen.height * .45f;
 		cellSide = inventoryWidth / cellsPerRow;
 	}
+
+	private Product expandedRecipe = null;
+
+	void DrawKnownRecipes () {
+		GUILayout.BeginArea (new Rect (GAME_MANAGER.SPACER, Screen.height * .25f, inventoryWidth * .25f, inventoryHeight));
+		GUILayout.Box ("Recipes");
+		foreach (Product p in CRAFTING_MASTER.KNOWN_RECIPES) {
+			if (GUILayout.Button (string.Format ("[{0}]", p.Name))) {
+				if (expandedRecipe == p) {
+					expandedRecipe = null;
+				}
+				else {
+					expandedRecipe = p;
+				}
+			}
+			if ( expandedRecipe == p ) {
+				foreach (Ingredient i in p.Recipe) {
+					GUILayout.Box (string.Format ("\t-{0}", i.Name));
+				}
+			}
+		}
+		GUILayout.EndArea();
+	}
+
 	
 	void DrawCell (Ingredient ingredient, Texture2D portrait) {
 		if (GUILayout.Button (ingredient.Name, GUILayout.Width(cellSide), GUILayout.Height(cellSide))) {
@@ -60,9 +84,9 @@ public class GUI_Crafting : IGUIMenu {
 			//}			
 		}
 	}
-	
+
 	void DrawInventory () {
-		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth, Screen.height * .25f, inventoryWidth, inventoryHeight));
+		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth / 2, Screen.height * .25f, inventoryWidth, inventoryHeight));
 
 		if (Player.INVENTORY.Count == 0) { Player.INVENTORY.Add (CRAFTING_MASTER.nothing); }
 		else if (Player.INVENTORY.Count > 1 && 
@@ -86,7 +110,7 @@ public class GUI_Crafting : IGUIMenu {
 	private string resultMessage = string.Empty;
 	
 	void DrawCrafting () {
-		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth, Screen.height * .75f, inventoryWidth / 2, inventoryHeight / 2));
+		GUILayout.BeginArea (new Rect (Screen.width / 2 - inventoryWidth / 2, Screen.height * .75f, inventoryWidth / 2, inventoryHeight / 2));
 		
 		// representation of itemsToCraft list
 		string craftingList = string.Empty;
@@ -148,6 +172,7 @@ public class GUI_Crafting : IGUIMenu {
 		if (DISPLAYED) {
 			DrawInventory();
 			DrawCrafting();
+			DrawKnownRecipes();
 		}
 	}
 }

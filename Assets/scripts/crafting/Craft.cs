@@ -118,6 +118,11 @@ public static class CRAFTING_MASTER
 		blackmail
 	};
 
+	public static List<Product> KNOWN_RECIPES = new List<Product>() {
+		noteSheet,
+		englishLessons
+	};
+
 	// special gossip section
 	public static void CreateGossip (GameObject onWhom) {
 		Gossip whichGossip = null;
