@@ -94,7 +94,7 @@ public static class CRAFTING_MASTER
 
 	// Mental ingredients
 	public static Ingredient translation = new Ingredient ("Knowledge of English and Russian", false);
-	public static Gossip gossipAdam = new Gossip ("Gossip on Adam", "Apparently he's a cheater at cards.");
+	public static Gossip gossipAdam;
 	public static Gossip gossipBetty;
 	public static Gossip gossipCleaver;
 	public static Gossip gossipDerek;
@@ -106,16 +106,20 @@ public static class CRAFTING_MASTER
 
 	// List of all the recipes in the game
 	// ======================================================================================== ALL RECIPES
+	// TODO AT WEGMANS: fill out gossip contents
 	public static Product englishLessons = new Product ("English Lessons for Liaison", new List<Ingredient>() { paper, quill, translation });
 	public static Product noteSheet = new Product ("Note sheet", new List<Ingredient>() { paper, quill });
 	public static Product journal = new Product ("Journal", new List<Ingredient>() { paper, paper, paper, quill });	
-	public static Product blackmail = new Product ("Blackmail note about Adam", new List<Ingredient>() { paper, quill, gossipAdam });
+	public static Product blackmailAdam = new Product ("Blackmail note about Adam", new List<Ingredient>() { paper, quill, gossipAdam });
+	public static Product blackmailBetty = new Product ("Blackmail note about Betty", new List<Ingredient>() { paper, quill, gossipBetty });
+
 
 	public static List<Product> PRODUCTS_MASTER_LIST = new List<Product>() {
 		noteSheet,
 		englishLessons,
 		journal,
-		blackmail
+		blackmailAdam,
+		blackmailBetty
 	};
 
 	public static List<Product> KNOWN_RECIPES = new List<Product>() {
@@ -126,11 +130,18 @@ public static class CRAFTING_MASTER
 	// special gossip section
 	public static void CreateGossip (GameObject onWhom) {
 		Gossip whichGossip = null;
-		// TODO: Variety
+		// TODO: Variety of gossip content
 		switch (onWhom.name) {
 		case "Adam":
+			gossipAdam = new Gossip ("Gossip on Adam", "Apparently he's a cheater at cards.");
 			LiaisonInventory.LIAISON_INVENTORY.Add (gossipAdam);
 			whichGossip = gossipAdam;
+			break;
+		case "Betty":
+			gossipBetty = new Gossip ("Gossip on Betty", 
+			                          "Her old nickname, \"Betty Rat,\" comes from the fact that she sold out a crewmate to her beloved first captain, Hamish.");
+			LiaisonInventory.LIAISON_INVENTORY.Add (gossipBetty);
+			whichGossip = gossipBetty;
 			break;
 		default:
 			Debug.Log ("Couldn't find " + onWhom.name);

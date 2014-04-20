@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using MutinyGame;
 
 public class Task {
 
@@ -101,7 +102,6 @@ public class LiaisonInventory : MonoBehaviour {
 
 	private static void Follow (Tail whom) {
 		float aleaIactaEst = UnityEngine.Random.Range (0, 100);
-		print (whom.SuccessRate);
 		if (aleaIactaEst <= whom.SuccessRate) {
 			//Ingredient gossip = new Ingredient ("Information on " + whom.Whom.name, false);
 			//GUI_Meeting.SET_LIAISON_SPEECH (
@@ -114,6 +114,29 @@ public class LiaisonInventory : MonoBehaviour {
 	}
 
 
+	private static void Talk (TalkTo whom) {
+		CharacterCard card = whom.Whom.GetComponent<CharacterCard>();
+		// TODO: Balance these values
+		switch (GAME_MANAGER.GET_RELATIONSHIP_GRADE(whom.Whom.GetComponent<CharacterCard>().yourRelationship)) {
+		case RelationshipGrade.Excellent:
+			card.yourRelationship += 2;
+			break;
+		case RelationshipGrade.Good:
+			card.yourRelationship += 3;
+			break;
+		case RelationshipGrade.Medium:
+			card.yourRelationship += 7;
+			break;
+		case RelationshipGrade.Poor:
+			card.yourRelationship += 4;
+			break;
+		default:
+			card.yourRelationship += 1;
+			break;
+		};
+	}
+
+
 	public static void DO_TODO_LIST () {
 		// manage each event in the to-do list
 		foreach (Task t in ToDoList.TODO_LIST) {
@@ -121,7 +144,7 @@ public class LiaisonInventory : MonoBehaviour {
 				SmuggleIn (t as BringMe);
 			}
 			else if (t is TalkTo) {
-				// TODO: talking code
+				Talk (t as TalkTo);
 			}
 			else if (t is Tail) {
 				Follow (t as Tail);

@@ -299,4 +299,11 @@ public class GAME_MANAGER : MonoBehaviour {
 			}
 		}
 	}
+
+	// TODO: Remove. Test purposes only.
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.Quit();
+		}
+	}
 }
