@@ -148,7 +148,7 @@ public class GAME_MANAGER : MonoBehaviour {
 		GUI.EndGroup();
 	}
 	public static bool TUTORIAL = true;
-	GUI_Crafting craftingWindow = null;
+	IGUIMenu currentWindow = null;
 	private bool drawn = false;
 	public int TUTORIAL_PROGRESS = 0;
 	private void RunTutorial () {
@@ -184,10 +184,10 @@ public class GAME_MANAGER : MonoBehaviour {
 			break;
 
 		case 6:
-			if (craftingWindow == null) {
-				craftingWindow = GameObject.Find ("GUI").GetComponent<GUI_Crafting>();
+			if (currentWindow == null) {
+				currentWindow = GameObject.Find ("GUI").GetComponent<GUI_Crafting>();
 			}
-			if (!craftingWindow.GetDisplayed()) {
+			if (!(currentWindow as GUI_Crafting).GetDisplayed()) {
 				TutorialCell ("To use items in your inventory, click on \"Item Creation\" in the navigation bar.",
 				              Screen.width - 300, 100f, 300, 200, false);
 			}
@@ -199,6 +199,9 @@ public class GAME_MANAGER : MonoBehaviour {
 		case 7:
 			TutorialCell ("Let's start with a very practical item - the Note Sheet. You can use Note Sheets to unlock more windows in the Navigation Bar, which will help you plan your coup more effectively.",
 			              Screen.width / 2 - 300 / 2, 50f);
+			if (currentWindow != null) {
+				currentWindow = null;
+			}
 			break;
 
 		case 8:
@@ -228,9 +231,43 @@ public class GAME_MANAGER : MonoBehaviour {
 			break;
 
 		case 12:
-			TutorialCell ("Excellent work! Now, use this note sheet to unlock the Social View, one of the most important windows in Mutiny.",
+			TutorialCell ("Excellent work! Be creative in your crafting. You can discover new recipes on your own, learn about new recipes from your liaison or " +
+			              "other crewmembers, and more.");
+			break;
+
+		case 13: 
+			TutorialCell ("Now, use this note sheet to unlock the Social View, one of the most important windows in Mutiny. When it's unlocked, clicked" +
+				"\"Social View\" to proceed.",
 			              10, 200, 300, 200, false);
-			// TODO: pick up from here
+			if (currentWindow == null) {
+				currentWindow = GameObject.Find ("GUI").GetComponent<GUI_RelationshipsDisplay>();
+			}
+			if ((currentWindow as GUI_RelationshipsDisplay).DISPLAYED) {
+				TUTORIAL_PROGRESS++;
+			}
+			break;
+
+		case 14:
+			TutorialCell ("Click on any crewmember's portrait to view their relationship with the rest of the crew. Their feelings toward you and your liaison are show in the " +
+			              "box that contains their portrait.");
+			break;
+
+		case 15:
+			TutorialCell ("The higher the numbers here, the better the relationship. People on either extreme, for your endeavour or against it, tend to be pretty set in their views, " +
+			              "but those in the middle of the spectrum are more malleable.");
+			break;
+
+		case 16:
+			TutorialCell ("Use gifts, bribes, blackmail, threats, promises, appeals to religion, appeals to logic, and more to sway those around you. The more varied your liaison's " +
+			              "activities, the more varied your approach can be.");
+			break;
+
+		case 17:
+			TutorialCell ("You now have enough information to begin sowing the seeds of discontent! Consult the Reference Guide for more information, and good luck!");
+			break;
+
+		case 18:
+			TUTORIAL = false;
 			break;
 
 		default:
