@@ -119,19 +119,19 @@ public class LiaisonInventory : MonoBehaviour {
 		// TODO: Balance these values
 		switch (GAME_MANAGER.GET_RELATIONSHIP_GRADE(whom.Whom.GetComponent<CharacterCard>().yourRelationship)) {
 		case RelationshipGrade.Excellent:
-			card.yourRelationship += 2;
+			card._YourRelationship += 2;
 			break;
 		case RelationshipGrade.Good:
-			card.yourRelationship += 3;
+			card._YourRelationship += 3;
 			break;
 		case RelationshipGrade.Medium:
-			card.yourRelationship += 7;
+			card._YourRelationship += 7;
 			break;
 		case RelationshipGrade.Poor:
-			card.yourRelationship += 4;
+			card._YourRelationship += 4;
 			break;
 		default:
-			card.yourRelationship += 1;
+			card._YourRelationship += 1;
 			break;
 		};
 	}

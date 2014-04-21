@@ -317,6 +317,7 @@ public class GUI_Meeting : IGUIMenu {
 	void OnGUI () {
 		GUI.skin = skin;
 		if (DISPLAYED) {
+			TurnNotifications.SHOW_UPDATES();
 			DrawEffectsSinceLastTurn();
 			DrawLiaisonSpeech();
 			DrawDialogue();
