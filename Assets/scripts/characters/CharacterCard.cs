@@ -9,11 +9,20 @@ public class CharacterCard : MonoBehaviour {
 	public int personalityType;
 	public Dictionary<GameObject, int> relationships = new Dictionary<GameObject, int>();
 	private int _yourRelationship;
+
+	/// <summary>
+	/// Call yourRelationship to change your relationship without notification. Otherwise, call _YourRelationship.
+	/// </summary>
+	/// <value>Your relationship.</value>
 	public int yourRelationship {
 		get { return _yourRelationship; }
 		set { _yourRelationship = value; }
 	}
 
+	/// <summary>
+	/// Call _YourRelationship to show a notification when the relationship status changes. Otherwise, call yourRelationship.
+	/// </summary>
+	/// <value>The _ your relationship.</value>
 	public int _YourRelationship {
 		get { return _yourRelationship; }
 		set { 
